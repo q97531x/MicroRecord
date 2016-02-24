@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/orange"
+    android:elevation="5dp"
+    android:minHeight="?attr/actionBarSize"
+    >
+
+        <!--<TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            />
+        <TextView
+            android:id="@+id/icon_time_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/icon_detail"
+            android:textSize="32sp"
+            />
+        <TextView
+            android:id="@+id/icon_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:textSize="24sp"
+            android:text="@string/icon_confirm"/>-->
+</android.support.v7.widget.Toolbar>

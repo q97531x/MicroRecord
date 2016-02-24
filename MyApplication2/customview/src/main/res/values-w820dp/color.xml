@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="orange">#ff9327</color>
+    <color name="deep_orange">#f78432</color>
+    <color name="background">#F6F7F8</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dark_white">#F7D084</color>
+    <color name="red">#F78432</color>
+    <color name="border">#FFE5E5E5</color>
+    <color name="deepborder">#FFC2C2C2</color>
+    <color name="grey">#FF666666</color>
+    <color name="deepgrey">#FF333333</color>
+    <color name="darkborder">#9e9e9e</color>
+    <color name="green">#4db6ac</color>
+</resources>

@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">小小账簿</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="action_edit">Edit</string>
+    <string name="title_activity_frame">FrameActivity</string>
+    <string name="title_activity_date_dialog">DateDialogActivity</string>
+    <string name="title_activity_calculator">CalculatorActivity</string>
+    <string name="title_activity_password">PasswordActivity</string>
+    <string name="title_activity_remind">remindActivity</string>
+    <string name="title_activity_check_password">CheckPasswordActivity</string>
+    <string name="title_activity_sms">SmsActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_suggest">SuggestActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="can_not_find_version_name">Failed to found verson name</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_avater">AvaterActivity</string>
+
+
+    <!-- icon-->
+    <!--确认-->
+    <string name="icon_confirm">&#xe604;</string>
+    <!--笔-->
+    <string name="icon_pencil">&#xe601;</string>
+    <!--返回-->
+    <string name="icon_back">&#xe603;</string>
+    <!--右键头-->
+    <string name="icon_detail">&#xe605;</string>
+    <string name="title_activity_select_type">SelectTypeActivity</string>
+</resources>
