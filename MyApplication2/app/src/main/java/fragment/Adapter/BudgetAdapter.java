@@ -67,7 +67,7 @@ public class BudgetAdapter extends BaseAdapter{
         if(budgets.get(position).getBudgetAccount()==0) {
             holder.progress.setProgress(0);
         }else{
-
+            //llll
         }
         return null;
     }
