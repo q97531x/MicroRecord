@@ -12,7 +12,9 @@ public class Outcome {
     int userId;
     //int outcomeId;
     String outcomeType;
-    String outcomeTime;
+    String outcomeTime;//日
+    String outcomeMonth;//月
+    String outcomeWeek;//周
     String reOutcomeTime;
     String outcomeHour;//记录的时间
     double outcomeAmount;

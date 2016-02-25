@@ -62,6 +62,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("明细");
+        toolbar.setSubtitle("2016.2.25");
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerlayout);
         drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,
                 R.string.drawer_close);

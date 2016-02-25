@@ -12,11 +12,16 @@ import android.view.MenuItem;
 
 import net.tsz.afinal.FinalDb;
 
+import java.util.ArrayList;
+
 import util.TypeData;
 
 //判断跳转至哪一页面
 public class SplashActivity extends Activity {
     private FinalDb db;
+    private String[] type = {
+            "餐饮","购物","交通","娱乐","居家","医药","进修","人情","投资","其他"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +67,7 @@ public class SplashActivity extends Activity {
             return false;
         } else {
             editor.putBoolean("isFirstRun", false);
+
             editor.commit();
             return true;
         }

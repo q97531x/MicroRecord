@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.ViewGroup.LayoutParams;
 import com.example.q97531x.myapplication.CalculatorActivity;
@@ -44,7 +45,8 @@ public class BudgetFragment extends Fragment{
     TextView txItem,budgetDate;
     TextView txBudget;
     TextView txAccount,budgetSum,remind;
-    ImageView image,seekBar,typeicon;
+    ImageView seekBar,typeicon;
+    private ProgressBar image;
     LayoutParams params,paramsall;
     LayoutParams view2,viewall;
     BaseAdapter adapter;
@@ -84,12 +86,7 @@ public class BudgetFragment extends Fragment{
         month = c.get(Calendar.MONTH);
         date = year+"年"+(month+1)+"月";
         budgetDate.setText(date);
-        budgetAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
         adapter = new BaseAdapter() {
             @Override
@@ -111,13 +108,12 @@ public class BudgetFragment extends Fragment{
             public View getView(int position, View convertView, ViewGroup parent) {
                 initText(10);
                 View view1 = inflater.inflate(R.layout.budgetlist, parent, false);
-                frame = (FrameLayout)view1.findViewById(R.id.frame);
+                //frame = (FrameLayout)view1.findViewById(R.id.frame);
                 typeicon = (ImageView)view1.findViewById(R.id.typeicon);
-                txItem = (TextView)view1.findViewById(R.id.txName);
+                //txItem = (TextView)view1.findViewById(R.id.txName);
                 txBudget = (TextView)view1.findViewById(R.id.txBudget);
                 txAccount = (TextView)view1.findViewById(R.id.txAccount);
-                image = (ImageView)view1.findViewById(R.id.listView);
-                params = frame.getLayoutParams();
+                image = (ProgressBar)view1.findViewById(R.id.listView);
                 view2 = image.getLayoutParams();
                 switch (position){
                     case 0:
@@ -215,7 +211,7 @@ public class BudgetFragment extends Fragment{
                 } else {
                     bd.putInt("tag", -1);
                 }
-                Log.e("pp",text.get(position).toString());
+//                Log.e("pp",text.get(position).toString());
                 intent.putExtra("bd", bd);
                 startActivity(intent);
             }

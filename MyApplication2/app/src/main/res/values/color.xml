@@ -13,4 +13,5 @@
     <color name="darkborder">#9e9e9e</color>
     <color name="green">#4db6ac</color>
     <color name="lightdark">#323232</color>
+    <color name="lightgrey">#FF999999</color>
 </resources>

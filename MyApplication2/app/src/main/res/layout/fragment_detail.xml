@@ -17,7 +17,7 @@
             android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#f5f5f5"
+        android:background="@color/lightgrey"
         android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,8 +76,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tab"
-        android:background="@color/white"
+        android:background="@color/background"
         android:padding="10dp"
+        android:dividerHeight="10dp"
+        android:divider="@color/background"
         android:id="@+id/list"/>
     <TextView
         android:id="@+id/write"
