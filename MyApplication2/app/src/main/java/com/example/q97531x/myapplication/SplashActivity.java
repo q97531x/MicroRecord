@@ -14,13 +14,21 @@ import net.tsz.afinal.FinalDb;
 
 import java.util.ArrayList;
 
+import model.Type;
 import util.TypeData;
 
 //判断跳转至哪一页面
 public class SplashActivity extends Activity {
     private FinalDb db;
-    private String[] type = {
-            "餐饮","购物","交通","娱乐","居家","医药","进修","人情","投资","其他"
+    private String[] typeName = {
+            "餐饮","购物","交通","娱乐","居家","医药","进修","人情","投资","其他",
+            "生活费","兼职","奖金","分红","报销","工资","补贴","其他"
+    };
+    private int[] typeIcon = {
+        R.drawable.icons_food,R.drawable.icons_shop,R.drawable.icons_traffic,
+            R.drawable.icons_entertainment,R.drawable.icons_home,R.drawable.icons_health,R.drawable.icons_study,R.drawable.icons_dividend,
+            R.drawable.icons_stocks,R.drawable.icons_others,R.drawable.icons_parents,R.drawable.icons_parttimejib,
+            R.drawable.icons_prize,R.drawable.icons_supply,R.drawable.icons_writeoff,R.drawable.icons_work,R.drawable.icons_others
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +59,24 @@ public class SplashActivity extends Activity {
                         MainActivity.class);
                 startActivity(intent);
             } else {
+                Type type = new Type();
+                for(int i = 0;i<typeName.length;i++){
+                    if(i<10){
+                        type.setOutcomeTypeName(typeName[i]);
+                        type.setOutcomeTypeIcon(typeIcon[i]);
+                        db.save(type);
+                    }else{
+                        type.setIncomeTypeName(typeName[i]);
+                        type.setOutcomeTypeIcon(typeIcon[i]);
+                        db.save(type);
+                    }
+                }
                 Intent intent = new Intent(SplashActivity.this,
                         FrameActivity.class);
                 startActivity(intent);
             }
             finish();
-        };
+        }
     };
     private boolean isFristRun() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(

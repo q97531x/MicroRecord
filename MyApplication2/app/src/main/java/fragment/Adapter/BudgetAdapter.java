@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import model.Budget;
 import model.Outcome;
+import model.Type;
 
 /**
  * Created by XmacZone on 16/2/25.
@@ -23,8 +24,8 @@ public class BudgetAdapter extends BaseAdapter{
     ArrayList<Outcome> outcomes;
     ArrayList<Budget> budgets;
     //类型集合
-    ArrayList<String> type;
-    public BudgetAdapter(Context context,ArrayList<Outcome> outcomes,ArrayList<Budget> budgets,ArrayList<String> type) {
+    ArrayList<Type> type;
+    public BudgetAdapter(Context context,ArrayList<Outcome> outcomes,ArrayList<Budget> budgets,ArrayList<Type> type) {
         this.context = context;
         this.outcomes = outcomes;
         this.budgets = budgets;
@@ -49,6 +50,7 @@ public class BudgetAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        int width;
         if(convertView == null){
             holder = new ViewHolder();
             convertView = View.inflate(context, R.layout.budgetlist,null);
@@ -60,7 +62,13 @@ public class BudgetAdapter extends BaseAdapter{
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
-//        holder.typeicon.setBackgroundResource();
+        holder.typeicon.setBackgroundResource(type.get(position).getOutcomeTypeIcon());
+        holder.txName.setText(type.get(position).getOutcomeTypeName());
+        if(budgets.get(position).getBudgetAccount()==0) {
+            holder.progress.setProgress(0);
+        }else{
+
+        }
         return null;
     }
     public static class ViewHolder{

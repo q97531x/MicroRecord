@@ -21,7 +21,7 @@ public class Type {
     public String getOutcomeTypeName(){
         return outcomeTypeName;
     }
-    public void setOutcomeTypeName(){
+    public void setOutcomeTypeName(String outcomeTypeName){
         this.outcomeTypeName = outcomeTypeName;
     }
     public int getOutcomeTypeIcon(){
@@ -33,7 +33,7 @@ public class Type {
     public String getIncomeTypeName(){
         return incomeTypeName;
     }
-    public void setIncomeTypeName(){
+    public void setIncomeTypeName(String incomeTypeName){
         this.incomeTypeName = incomeTypeName;
     }
     public int getIncomeTypeIcon(){
