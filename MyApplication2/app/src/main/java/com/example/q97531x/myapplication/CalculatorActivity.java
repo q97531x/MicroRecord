@@ -47,7 +47,7 @@ public class CalculatorActivity extends ActionBarActivity {
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
-        budgetDate = year+"年"+(month+1)+"月";
+        budgetDate = year + "-" + (month + 1);
         initView();
         initListener();
     }
@@ -359,7 +359,7 @@ public class CalculatorActivity extends ActionBarActivity {
                     db.save(budget);
                     Log.e("save","save");
                 }
-                Log.e("DB", "" + budget.getBudgetAccount());
+                Log.e("DB", "" + budget.getBudgetAccount()+ type);
                 Intent intent = new Intent(CalculatorActivity.this,FrameActivity.class);
                 startActivity(intent);
             }

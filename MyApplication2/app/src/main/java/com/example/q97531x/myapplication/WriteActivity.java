@@ -42,7 +42,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
     //参数
     private Typeface iconfont;
     ArrayList<View> views;
-    private int year,month,day;
+    private int year,month,day,weekofMonth,dayofWeek;
     private Calendar calendar;
     private static final int GETTYPE = 23333;
     private Intent intent;
@@ -59,6 +59,8 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
+        dayofWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        weekofMonth = calendar.get(Calendar.WEEK_OF_MONTH);
         intent = getIntent();
         type = intent.getStringExtra("type");
         views = new ArrayList<>();
@@ -89,7 +91,9 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                 //保存数据
                 if(type.equals("outcome")){
                     Outcome outcome = new Outcome();
-                    outcome.setOutcomeTime(title.getText().toString());
+                    outcome.setOutcomeTime(title.getText().toString()+"周"+dayofWeek);
+                    outcome.setOutcomeMonth(year + "-" + (month + 1));
+                    outcome.setOutcomeWeek(weekofMonth+"");
                     if(!editAmount.getText().toString().equals("")) {
                         outcome.setOutcomeAmount(Double.parseDouble(editAmount.getText().toString()));
                         if(!typeEdit.getText().toString().equals("")){

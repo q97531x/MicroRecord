@@ -28,7 +28,7 @@
             android:textColor="#FFF"
             android:text=""/>
     </LinearLayout>
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
@@ -101,12 +101,12 @@
                 android:text=""/>
         </LinearLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/budgetList"
-        android:layout_weight="1">
+        >
 
     </ListView>
 </LinearLayout>

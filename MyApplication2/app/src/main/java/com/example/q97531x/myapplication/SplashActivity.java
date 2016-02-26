@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +22,14 @@ import util.TypeData;
 public class SplashActivity extends Activity {
     private FinalDb db;
     private String[] typeName = {
-            "餐饮","购物","交通","娱乐","居家","医药","进修","人情","投资","其他",
+            "总预算","餐饮","购物","交通","娱乐","居家","医药","进修","人情","投资","其他",
             "生活费","兼职","奖金","分红","报销","工资","补贴","其他"
     };
     private int[] typeIcon = {
-        R.drawable.icons_food,R.drawable.icons_shop,R.drawable.icons_traffic,
+        R.drawable.icons_all,R.drawable.icons_food,R.drawable.icons_shop,R.drawable.icons_traffic,
             R.drawable.icons_entertainment,R.drawable.icons_home,R.drawable.icons_health,R.drawable.icons_study,R.drawable.icons_dividend,
             R.drawable.icons_stocks,R.drawable.icons_others,R.drawable.icons_parents,R.drawable.icons_parttimejib,
-            R.drawable.icons_prize,R.drawable.icons_supply,R.drawable.icons_writeoff,R.drawable.icons_work,R.drawable.icons_others
+            R.drawable.icons_prize,R.drawable.icons_dividend,R.drawable.icons_writeoff,R.drawable.icons_work,R.drawable.icons_supply,R.drawable.icons_others
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +54,25 @@ public class SplashActivity extends Activity {
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             if (isFristRun()) {
-                TypeData typeData = new TypeData();
-
-                Intent intent = new Intent(SplashActivity.this,
-                        MainActivity.class);
-                startActivity(intent);
-            } else {
                 Type type = new Type();
                 for(int i = 0;i<typeName.length;i++){
-                    if(i<10){
+                    Log.e("splash",""+typeName.length);
+                    if(i<11){
                         type.setOutcomeTypeName(typeName[i]);
                         type.setOutcomeTypeIcon(typeIcon[i]);
                         db.save(type);
                     }else{
                         type.setIncomeTypeName(typeName[i]);
-                        type.setOutcomeTypeIcon(typeIcon[i]);
+                        type.setIncomeTypeIcon(typeIcon[i]);
                         db.save(type);
                     }
                 }
+
+                Intent intent = new Intent(SplashActivity.this,
+                        MainActivity.class);
+                startActivity(intent);
+            } else {
+
                 Intent intent = new Intent(SplashActivity.this,
                         FrameActivity.class);
                 startActivity(intent);

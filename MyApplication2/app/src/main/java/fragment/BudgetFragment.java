@@ -3,6 +3,7 @@ package fragment;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Layout;
@@ -26,10 +27,15 @@ import net.tsz.afinal.FinalDb;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
+import fragment.Adapter.BudgetAdapter;
 import model.Budget;
 import model.Outcome;
+import model.Type;
 
 /**
  * Created by Administrator on 2015/7/29.
@@ -57,10 +63,15 @@ public class BudgetFragment extends Fragment{
     LinearLayout budgetAll;
     List<Budget> bugListAll,bugOne;
     ArrayList<String> typeList = new ArrayList<>();
-    ArrayList<String> text = new ArrayList<>();
-    int icon[] = new int[]{
-            R.drawable.icons_food,R.drawable.icons_shop,R.drawable.icons_traffic,R.drawable.icons_entertainment,R.drawable.icons_home,R.drawable.icons_health
-            ,R.drawable.icons_study,R.drawable.icons_beauty,R.drawable.icons_travel,R.drawable.icons_others
+    ArrayList<Integer> typeIcon = new ArrayList<>();
+    private String[] typeName = {
+            "总预算","餐饮","购物","交通","娱乐","居家","医药","进修","人情","投资","其他",
+
+    };
+    private int[] typeView = {
+            R.drawable.icons_all,R.drawable.icons_food,R.drawable.icons_shop,R.drawable.icons_traffic,
+            R.drawable.icons_entertainment,R.drawable.icons_home,R.drawable.icons_health,R.drawable.icons_study,R.drawable.icons_dividend,
+            R.drawable.icons_stocks,R.drawable.icons_others
     };
     public BudgetFragment(){
         super();
@@ -69,93 +80,55 @@ public class BudgetFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_budget,container,false);
-        budgetList = (ListView)view.findViewById(R.id.budgetList);
-        budgetSum = (TextView)view.findViewById(R.id.budgetSum);
-        frame1 = (FrameLayout)view.findViewById(R.id.frame1);
-        seekBar = (ImageView)view.findViewById(R.id.seekBar);
-        paramsall = frame1.getLayoutParams();
-        viewall = seekBar.getLayoutParams();
-        remind = (TextView)view.findViewById(R.id.remind);
-        budgetAll = (LinearLayout)view.findViewById(R.id.budgetAll);
-        budgetDate = (TextView)view.findViewById(R.id.budgetDate);
+        View view = inflater.inflate(R.layout.fragment_budget, container, false);
+        budgetList = (ListView) view.findViewById(R.id.budgetList);
+        budgetDate = (TextView) view.findViewById(R.id.budgetDate);
         db = FinalDb.create(getActivity());
         //initBudgetBar();
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
-        date = year+"年"+(month+1)+"月";
+        date = year + "-" + (month + 1);
         budgetDate.setText(date);
 
+        for(int i = 0;i<typeName.length;i++){
+            typeList.add(typeName[i]);
+            typeIcon.add(typeView[i]);
+        }
+        BudgetAdapter adapter = new BudgetAdapter(getActivity(),typeList,typeIcon,db, date);
+        budgetList.setAdapter(adapter);
 
-        adapter = new BaseAdapter() {
+        budgetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public int getCount() {
-                return 10;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                initText(10);
-                View view1 = inflater.inflate(R.layout.budgetlist, parent, false);
-                //frame = (FrameLayout)view1.findViewById(R.id.frame);
-                typeicon = (ImageView)view1.findViewById(R.id.typeicon);
-                //txItem = (TextView)view1.findViewById(R.id.txName);
-                txBudget = (TextView)view1.findViewById(R.id.txBudget);
-                txAccount = (TextView)view1.findViewById(R.id.txAccount);
-                image = (ProgressBar)view1.findViewById(R.id.listView);
-                view2 = image.getLayoutParams();
-                switch (position){
-                    case 0:
-                        setItem("餐饮",position);
-                        break;
-                    case 1:
-                        setItem("购物",position);
-                        break;
-                    case 2:
-                        setItem("交通",position);
-                        break;
-                    case 3:
-                        setItem("娱乐",position);
-                        break;
-                    case 4:
-                        setItem("居家",position);
-                        break;
-                    case 5:
-                        setItem("医药",position);
-                        break;
-                    case 6:
-                        setItem("进修",position);
-                        break;
-                    case 7:
-                        setItem("美妆",position);
-                        break;
-                    case 8:
-                        setItem("旅游",position);
-                        break;
-                    case 9:
-                        setItem("其他",position);
-                        break;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                List<Budget> budgets = db.findAllByWhere(Budget.class, " budgetDate=\"" + date + "\"");
+                Intent intent = new Intent(getActivity(), CalculatorActivity.class);
+                Bundle bd = new Bundle();
+                bd.putString("type", typeList.get(position));
+                if(budgets.size()>0) {
+                    for (int i = 0; i < budgets.size(); i++) {
+                        if (budgets.get(i).getBudgetType().equals(typeList.get(position))) {
+                            bd.putInt("tag", 1);
+                        }else {
+                            bd.putInt("tag", -1);
+                        }
+                    }
+                }else {
+                    bd.putInt("tag", -1);
                 }
-                return view1;
+                /*if (!text.get(position).toString().equals("预算未设置")) {
+                    bd.putInt("tag", 1);
+                } else {
+                    bd.putInt("tag", -1);
+                }*/
+//                Log.e("pp",text.get(position).toString());
+                intent.putExtra("bd", bd);
+                startActivity(intent);
             }
-            //初始化文字
-            public void initText(int k){
-                for(int i = 0;i<k;i++){
-                    text.add("预算未设置");
-                }
-            }
-            public void setItem(String type,int j){
+        });
+        return view;
+    }
+            /*public void setItem(String type,int j){
                 budgetAccount=0.00;
                 typeicon.setImageResource(icon[j]);
                 txItem.setText(type);
@@ -217,8 +190,8 @@ public class BudgetFragment extends Fragment{
             }
         });
         return view;
-    }
-    public void initBudgetBar(){
+    }*/
+    /*public void initBudgetBar(){
         outcomeListAll = db.findAll(Outcome.class," reOutcomeTime=\"" + budgetDate.getText().toString() + "\"");
         bugListAll = db.findAll(Budget.class," budgetDate=\"" + budgetDate.getText().toString() + "\"");
             if (bugListAll.size() > 0) {
@@ -245,13 +218,13 @@ public class BudgetFragment extends Fragment{
             remind.setText("余额" + remindSum);
         }
         budgetCount = 0;
-    }
+    }*/
     @Override
     public void onResume() {
         super.onResume();
         bugListAll = db.findAll(Budget.class," budgetDate=\"" + budgetDate.getText().toString() + "\"");
-        adapter.notifyDataSetChanged();//刷新Listview数据
-        initBudgetBar();
+//        adapter.notifyDataSetChanged();//刷新Listview数据
+//        initBudgetBar();
         /*budgetList.setAdapter(adapter);
         Log.e("resume","resume");*/
     }

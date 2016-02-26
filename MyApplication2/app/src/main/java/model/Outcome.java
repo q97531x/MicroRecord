@@ -67,5 +67,16 @@ public class Outcome {
     public void setOutcomeNote(String outcomeNote) {
         this.outcomeNote = outcomeNote;
     }
-
+    public String getOutcomeMonth(){
+        return outcomeMonth;
+    }
+    public void setOutcomeMonth(String outcomeMonth){
+        this.outcomeMonth = outcomeMonth;
+    }
+    public String getOutcomeWeek(){
+        return outcomeWeek;
+    }
+    public void setOutcomeWeek(String outcomeWeek){
+        this.outcomeWeek = outcomeWeek;
+    }
 }
