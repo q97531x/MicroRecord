@@ -102,7 +102,7 @@ public class BudgetAdapter extends BaseAdapter{
                     a = 1;
                 }
                 width = (int)(a*100);
-                Log.e("budget",""+budget+a+"xx"+width);
+//                Log.e("budget",""+budget+a+"xx"+width);
                 holder.txBudget.setText("预算" + budget + "￥");
                 holder.progress.setProgress(width);
                 b = budget - outcome;
