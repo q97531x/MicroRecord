@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 import Widget.SlideListView;
+import fragment.Adapter.DetailAdapter;
 import model.Income;
 import model.Outcome;
 
@@ -90,26 +91,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
         day = c.get(Calendar.DAY_OF_MONTH);
         date = year + "-" + (month + 1) + "-" + day;
         DataBase(date);
-        /*// App Icon
-        toolbar.setNavigationIcon(R.drawable.icons_user);
-        // Title
-        toolbar.setTitle("小小账簿");
-        // Sub Title
-        Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
-        toolbar.setSubtitle(year + "年" + (month + 1) + "月" + day + "日");
-        DataBase(toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        //NavigationIcon点击事件
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //打开侧边界面
-                mDrawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });*/
+
         outcomeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,7 +188,17 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
 
     public void DataBase(String date){
         if(flag == 0){
-            List<Outcome> outcomeList = db.findAllByWhere(Outcome.class, " outcomeTime=\"" +date  + "\"");
+            List<Outcome> outcomeList = db.findAllByWhere(Outcome.class, " outcomeTime=\"" + date + "\"");
+            ArrayList<Double> listAmount = new ArrayList<>();
+            ArrayList<String> listType = new ArrayList<>();
+            ArrayList<String> listTime = new ArrayList<>();
+
+            for(int i = 0;i<outcomeList.size();i++){
+                listAmount.add(outcomeList.get(i).getOutcomeAmount());
+                listType.add(outcomeList.get(i).getOutcomeType());
+                listTime.add(outcomeList.get(i).getOutcomeTime());
+            }
+            DetailAdapter adapter = new DetailAdapter(getActivity(),listAmount,listTime,listType);
             Log.e("outcome",outcomeList.toString());
             List<Map<String ,Object>> listItems = new ArrayList<Map<String,Object>>();
             for(int i = 0;i<outcomeList.size();i++){
@@ -217,7 +209,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
                 listItem.put("id",outcomeList.get(i).getUserId());
                 listItems.add(listItem);
             }
-            SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), listItems, R.layout.simple_item, new String[]{"Amount","Type","Time","id"}, new int[]{R.id.detailAmount,R.id.detailType,R.id.detailTime});
+            final SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), listItems, R.layout.simple_item, new String[]{"Amount","Type","Time","id"}, new int[]{R.id.detailAmount,R.id.detailType,R.id.detailTime});
             lv.setAdapter(simpleAdapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -233,6 +225,14 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
                     bundle.putInt("id", id);
                     intent.putExtra("bd", bundle);
                     startActivity(intent);
+                }
+            });
+            lv.SetRemoveListener(new SlideListView.RemoveListener() {
+                @Override
+                public void removeItem(SlideListView.RemoveDirection direction, int position) {
+                    if (direction == SlideListView.RemoveDirection.LEFT) {
+
+                    }
                 }
             });
         }else if(flag == 1){

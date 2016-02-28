@@ -96,7 +96,7 @@ public class ReportFragment extends Fragment {
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
-        date = year+"年"+(month+1)+"月";
+        date = year+"-"+(month+1);
         reportDate.setText(date);
         //setData(type.size(),list);
         //for(int j = 0;j<M)

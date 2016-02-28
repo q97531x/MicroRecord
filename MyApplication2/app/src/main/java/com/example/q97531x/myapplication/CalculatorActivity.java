@@ -1,5 +1,6 @@
 package com.example.q97531x.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -39,10 +40,10 @@ public class CalculatorActivity extends ActionBarActivity {
         setContentView(R.layout.activity_calculator);
         db = FinalDb.create(this);
         Intent it = getIntent();
-        Bundle bundle = it.getBundleExtra("bd");
-        type = bundle.getString("type");
+        //Bundle bundle = it.getBundleExtra("bd");
+        type = it.getStringExtra("type");
         Log.e("type", type);
-        tag = bundle.getInt("tag");
+        tag = it.getIntExtra("tag",1);
         Log.e("tag",""+tag);
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
@@ -361,7 +362,9 @@ public class CalculatorActivity extends ActionBarActivity {
                 }
                 Log.e("DB", "" + budget.getBudgetAccount()+ type);
                 Intent intent = new Intent(CalculatorActivity.this,FrameActivity.class);
-                startActivity(intent);
+//                startActivity(intent);
+                setResult(Activity.RESULT_OK,intent);
+                finish();
             }
 
         });

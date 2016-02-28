@@ -1,6 +1,7 @@
 package fragment;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,19 +44,18 @@ import model.Type;
 public class BudgetFragment extends Fragment{
     ListView budgetList;
     FinalDb db;
-    double[] sum = new double[10];
-    double budgetCount=0,remindSum=0;
     int year,month,day;
     String date;
-    FrameLayout frame,frame1;
-    TextView txItem,budgetDate;
+    private  static final int setBudget = 2333;
+    private BudgetAdapter adapter;
+    TextView budgetDate;
     TextView txBudget;
     TextView txAccount,budgetSum,remind;
     ImageView seekBar,typeicon;
     private ProgressBar image;
     LayoutParams params,paramsall;
     LayoutParams view2,viewall;
-    BaseAdapter adapter;
+
     double budgetAccount,outcomeSum = 0,varible;
     List<Outcome> outcomeList;
     List<Budget> bugList;
@@ -77,6 +77,15 @@ public class BudgetFragment extends Fragment{
         super();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == setBudget){
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +104,7 @@ public class BudgetFragment extends Fragment{
             typeList.add(typeName[i]);
             typeIcon.add(typeView[i]);
         }
-        BudgetAdapter adapter = new BudgetAdapter(getActivity(),typeList,typeIcon,db, date);
+        adapter = new BudgetAdapter(getActivity(),typeList,typeIcon,db, date);
         budgetList.setAdapter(adapter);
 
         budgetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,18 +112,18 @@ public class BudgetFragment extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<Budget> budgets = db.findAllByWhere(Budget.class, " budgetDate=\"" + date + "\"");
                 Intent intent = new Intent(getActivity(), CalculatorActivity.class);
-                Bundle bd = new Bundle();
-                bd.putString("type", typeList.get(position));
+//                Bundle bd = new Bundle();
+                intent.putExtra("type", typeList.get(position));
                 if(budgets.size()>0) {
                     for (int i = 0; i < budgets.size(); i++) {
                         if (budgets.get(i).getBudgetType().equals(typeList.get(position))) {
-                            bd.putInt("tag", 1);
+                           intent.putExtra("tag", 1);
                         }else {
-                            bd.putInt("tag", -1);
+                            intent.putExtra("tag", -1);
                         }
                     }
                 }else {
-                    bd.putInt("tag", -1);
+                    intent.putExtra("tag", -1);
                 }
                 /*if (!text.get(position).toString().equals("预算未设置")) {
                     bd.putInt("tag", 1);
@@ -122,8 +131,8 @@ public class BudgetFragment extends Fragment{
                     bd.putInt("tag", -1);
                 }*/
 //                Log.e("pp",text.get(position).toString());
-                intent.putExtra("bd", bd);
-                startActivity(intent);
+//                intent.putExtra("bd", bd);
+                startActivityForResult(intent,setBudget);
             }
         });
         return view;

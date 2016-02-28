@@ -91,7 +91,8 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                 //保存数据
                 if(type.equals("outcome")){
                     Outcome outcome = new Outcome();
-                    outcome.setOutcomeTime(title.getText().toString()+"周"+dayofWeek);
+                    outcome.setOutcomeTime(title.getText().toString());
+                    outcome.setReOutcomeTime(year + "-" + (month + 1));
                     outcome.setOutcomeMonth(year + "-" + (month + 1));
                     outcome.setOutcomeWeek(weekofMonth+"");
                     if(!editAmount.getText().toString().equals("")) {
