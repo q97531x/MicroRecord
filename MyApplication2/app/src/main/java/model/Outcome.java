@@ -9,8 +9,8 @@ import net.tsz.afinal.annotation.sqlite.Table;
 @Table(name = "Outcome")
 public class Outcome {
     @Id(column="outcomeId")
-    int userId;
-    //int outcomeId;
+//    int userId;
+    int outcomeId;
     String outcomeType;
     String outcomeTime;//日
     String outcomeMonth;//月
@@ -19,11 +19,11 @@ public class Outcome {
     String outcomeHour;//记录的时间
     double outcomeAmount;
     String outcomeNote;
-    public int getUserId() {
-        return userId;
+    public int getOutcomeId() {
+        return outcomeId;
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setOutcomeId(int outcomeId) {
+        this.outcomeId = outcomeId;
     }
 //    public int getOutcomeId(){
 //        return outcomeId;

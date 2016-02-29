@@ -54,6 +54,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     LinearLayout outcomeLayout,incomeLayout;
     ImageView detailOutcome,detailIncome;
     private TextView outcomeText,incomeText,write;
+    private static final int UPDATE = 1234;
     SlideListView lv;
     FinalDb db;
     Toolbar toolbar;
@@ -62,6 +63,12 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     public DetailFragment(){
         super();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,14 +96,15 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
-        date = year + "-" + (month + 1) + "-" + day;
+//        date = year + "-" + (month + 1) + "-" + day;
+        date = year + "-" + (month+1);
         DataBase(date);
 
         outcomeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 flag = 0;
-                Toast.makeText(getActivity(),"支出"+flag,Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),"支出"+flag,Toast.LENGTH_LONG).show();
                 detailIncome.setImageResource(R.drawable.icons_income02);
                 detailOutcome.setImageResource(R.drawable.icons_outcome1);
                 type = "outcome";
@@ -107,65 +115,14 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 flag = 1;
-                Toast.makeText(getActivity(),"收入"+flag,Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(),"收入"+flag,Toast.LENGTH_LONG).show();
                 detailIncome.setImageResource(R.drawable.icons_income1);
                 detailOutcome.setImageResource(R.drawable.icons_outcome02);
                 type = "income";
                 DataBase(date);
             }
         });
-     /*   toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_edit:
-//                       Toast.makeText(getActivity(),"write",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getActivity(), RecordActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("id", -1);
-                        intent.putExtra("bd", bundle);
-                        startActivity(intent);
-                        break;
-                    case R.id.action_share:
-                        Toast.makeText(getActivity(), "action_share", Toast.LENGTH_LONG).show();
-                        break;
-                    case R.id.action_date:
-                        DatePickerDialog.OnDateSetListener Datelistener=new DatePickerDialog.OnDateSetListener()
-                        {
-                            *//**params：view：该事件关联的组件
-                             * params：myyear：当前选择的年
-                             * params：monthOfYear：当前选择的月
-                             * params：dayOfMonth：当前选择的日
-                             *//*
-                            @Override
-                            public void onDateSet(DatePicker view, int myyear, int monthOfYear,int dayOfMonth) {
-                                //修改year、month、day的变量值，以便以后单击按钮时，DatePickerDialog上显示上一次修改后的值
-                                year=myyear;
-                                month=monthOfYear;
-                                day=dayOfMonth;
-                                //更新日期
-                                updateDate();
-                            }
-                            //当DatePickerDialog关闭时，更新日期显示
-                            private void updateDate()
-                            {
-                                //在TextView上显示日期
-                                toolbar.setSubtitle(year + "年" + (month+1) + "月" + day + "日");
-                                DataBase(toolbar);
-                            }
-                        };
-                        *//*Calendar c = Calendar.getInstance();
-                        year = c.get(Calendar.YEAR);
-                        month = c.get(Calendar.MONTH)+1;
-                        day = c.get(Calendar.DAY_OF_MONTH);*//*
-                        Dialog dialog = new DatePickerDialog(getActivity(),  Datelistener, year, month, day);
-                        dialog.show();
-                        break;
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });*/
+
         return view;
     }
 
@@ -175,6 +132,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
             case R.id.write:
                 Intent intent = new Intent(getActivity(),WriteActivity.class);
                 intent.putExtra("type",type);
+                intent.putExtra("aim","create");
                 startActivity(intent);
                 break;
         }
@@ -186,32 +144,33 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
 //        DataBase(toolbar);
     }
 
-    public void DataBase(String date){
+    public void DataBase(final String date){
         if(flag == 0){
-            List<Outcome> outcomeList = db.findAllByWhere(Outcome.class, " outcomeTime=\"" + date + "\"");
-            ArrayList<Double> listAmount = new ArrayList<>();
-            ArrayList<String> listType = new ArrayList<>();
-            ArrayList<String> listTime = new ArrayList<>();
+            final List<Outcome> outcomeList = db.findAllByWhere(Outcome.class, " outcomeMonth=\"" + date + "\"");
+            final ArrayList<Double> listAmount = new ArrayList<>();
+            final ArrayList<String> listType = new ArrayList<>();
+            final ArrayList<String> listTime = new ArrayList<>();
 
             for(int i = 0;i<outcomeList.size();i++){
                 listAmount.add(outcomeList.get(i).getOutcomeAmount());
                 listType.add(outcomeList.get(i).getOutcomeType());
                 listTime.add(outcomeList.get(i).getOutcomeTime());
             }
-            DetailAdapter adapter = new DetailAdapter(getActivity(),listAmount,listTime,listType);
-            Log.e("outcome",outcomeList.toString());
+            final DetailAdapter adapter = new DetailAdapter(getActivity(),listAmount,listTime,listType);
+            /*Log.e("outcome",outcomeList.toString());
             List<Map<String ,Object>> listItems = new ArrayList<Map<String,Object>>();
             for(int i = 0;i<outcomeList.size();i++){
                 Map<String,Object> listItem = new HashMap<String,Object>();
                 listItem.put("Amount", outcomeList.get(i).getOutcomeAmount());
                 listItem.put("Type", outcomeList.get(i).getOutcomeType());
                 listItem.put("Time", outcomeList.get(i).getOutcomeHour());
-                listItem.put("id",outcomeList.get(i).getUserId());
+                listItem.put("id",outcomeList.get(i).getOutcomeId());
                 listItems.add(listItem);
             }
             final SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), listItems, R.layout.simple_item, new String[]{"Amount","Type","Time","id"}, new int[]{R.id.detailAmount,R.id.detailType,R.id.detailTime});
-            lv.setAdapter(simpleAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lv.setAdapter(simpleAdapter);*/
+            lv.setAdapter(adapter);
+            /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -226,12 +185,21 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
                     intent.putExtra("bd", bundle);
                     startActivity(intent);
                 }
-            });
+            });*/
             lv.SetRemoveListener(new SlideListView.RemoveListener() {
                 @Override
                 public void removeItem(SlideListView.RemoveDirection direction, int position) {
-                    if (direction == SlideListView.RemoveDirection.LEFT) {
+                    if (direction == SlideListView.RemoveDirection.RIGHT) {
+                        Log.e("id", outcomeList.get(position).getOutcomeId()+"");
+                        db.deleteById(Outcome.class, outcomeList.get(position).getOutcomeId());
+                        DataBase(date);
 
+                    }else{
+                        Intent intent = new Intent(getActivity(),WriteActivity.class);
+                        intent.putExtra("id",outcomeList.get(position).getOutcomeId()+"");
+                        intent.putExtra("aim","update");
+                        intent.putExtra("type",type);
+                        startActivityForResult(intent, UPDATE);
                     }
                 }
             });

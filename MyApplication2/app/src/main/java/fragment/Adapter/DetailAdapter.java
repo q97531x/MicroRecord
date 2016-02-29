@@ -44,17 +44,53 @@ public class DetailAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        if(convertView == null){
+
             viewHolder = new ViewHolder();
             convertView = View.inflate(context, R.layout.simple_item,null);
             viewHolder.detailAmount = (TextView)convertView.findViewById(R.id.detailAmount);
             viewHolder.detailType = (TextView)convertView.findViewById(R.id.detailType);
             viewHolder.detailTime = (TextView)convertView.findViewById(R.id.detailTime);
             viewHolder.detailTypeIcon = (ImageView)convertView.findViewById(R.id.detailTypeIcon);
-        }else {
-            viewHolder = (ViewHolder)convertView.getTag();
+
+        viewHolder.detailAmount.setText(detailAmount.get(position)+"");
+        viewHolder.detailTime.setText(detailTime.get(position));
+        viewHolder.detailType.setText(detailType.get(position));
+        switch (detailType.get(position)){
+            case "餐饮":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_food);
+                break;
+            case "购物":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_shop);
+                break;
+            case "交通":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_traffic);
+                break;
+            case "娱乐":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_entertainment);
+                break;
+            case "居家":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_home);
+                break;
+            case "医药":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_health);
+                break;
+            case "进修":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_study);
+                break;
+            case "人情":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_dividend);
+                break;
+            case "投资":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_stocks);
+                break;
+            case "其他":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_others);
+                break;
+            default:
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_others);
+                break;
         }
-        viewHolder.detailAmount.setText(detailAmount+"");
+
         return convertView;
     }
     public class ViewHolder{

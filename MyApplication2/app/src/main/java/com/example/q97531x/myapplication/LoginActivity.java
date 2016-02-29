@@ -3,6 +3,7 @@ package com.example.q97531x.myapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +46,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_login:
+                Log.e("Login","Login"+login_userName.getText().toString());
                 BmobQuery<Person> query = new BmobQuery<Person>();
                 query.addWhereEqualTo("userName",login_userName.getText().toString());
                 query.findObjects(this, new FindListener<Person>() {

@@ -9,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
     private Calendar calendar;
     private static final int GETTYPE = 23333;
     private Intent intent;
-    private String type;
+    private String type,aim,id;
     private FinalDb db;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
     @Override
@@ -62,7 +63,11 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
         dayofWeek = calendar.get(Calendar.DAY_OF_WEEK);
         weekofMonth = calendar.get(Calendar.WEEK_OF_MONTH);
         intent = getIntent();
+        if(intent.getStringExtra("id")!=null){
+            id = intent.getStringExtra("id");
+        }
         type = intent.getStringExtra("type");
+        aim = intent.getStringExtra("aim");
         views = new ArrayList<>();
         initToolbar();
         initView();
@@ -88,52 +93,104 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.confirm:
-                //保存数据
-                if(type.equals("outcome")){
-                    Outcome outcome = new Outcome();
-                    outcome.setOutcomeTime(title.getText().toString());
-                    outcome.setReOutcomeTime(year + "-" + (month + 1));
-                    outcome.setOutcomeMonth(year + "-" + (month + 1));
-                    outcome.setOutcomeWeek(weekofMonth+"");
-                    if(!editAmount.getText().toString().equals("")) {
-                        outcome.setOutcomeAmount(Double.parseDouble(editAmount.getText().toString()));
-                        if(!typeEdit.getText().toString().equals("")){
-                            outcome.setOutcomeType(typeEdit.getText().toString());
-                            if(!editDetail.getText().toString().equals("")){
-                                outcome.setOutcomeNote(editDetail.getText().toString());
-                                db.save(outcome);
-                            }else {
-                                outcome.setOutcomeNote("");
-                                db.save(outcome);
+                if(aim.equals("create")) {
+                    //保存数据
+                    if (type.equals("outcome")) {
+                        Outcome outcome = new Outcome();
+                        outcome.setOutcomeTime(title.getText().toString());
+                        outcome.setReOutcomeTime(year + "-" + (month + 1));
+                        outcome.setOutcomeMonth(year + "-" + (month + 1));
+                        outcome.setOutcomeWeek(weekofMonth + "");
+                        if (!editAmount.getText().toString().equals("")) {
+                            outcome.setOutcomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            if (!typeEdit.getText().toString().equals("")) {
+                                outcome.setOutcomeType(typeEdit.getText().toString());
+                                if (!editDetail.getText().toString().equals("")) {
+                                    outcome.setOutcomeNote(editDetail.getText().toString());
+                                    db.save(outcome);
+                                } else {
+                                    outcome.setOutcomeNote("");
+                                    db.save(outcome);
+                                }
+                            } else {
+                                Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-                            Toast.makeText(this,"选择类别",Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
                         }
 
-                    }else{
-                        Toast.makeText(this,"输入金额",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Income income = new Income();
+                        income.setIncomeTime(title.getText().toString());
+                        if (!editAmount.getText().toString().equals("")) {
+                            income.setIncomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            if (!typeEdit.getText().toString().equals("")) {
+                                income.setIncomeType(typeEdit.getText().toString());
+                                if (!editDetail.getText().toString().equals("")) {
+                                    income.setIncomeNote(editDetail.getText().toString());
+                                    db.save(income);
+                                } else {
+                                    income.setIncomeNote("");
+                                    db.save(income);
+                                }
+                            } else {
+                                Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
                 }else{
-                    Income income = new Income();
-                    income.setIncomeTime(title.getText().toString());
-                    if(!editAmount.getText().toString().equals("")) {
-                        income.setIncomeAmount(Double.parseDouble(editAmount.getText().toString()));
-                        if(!typeEdit.getText().toString().equals("")){
-                            income.setIncomeType(typeEdit.getText().toString());
-                            if(!editDetail.getText().toString().equals("")){
-                                income.setIncomeNote(editDetail.getText().toString());
-                                db.save(income);
-                            }else {
-                                income.setIncomeNote("");
-                                db.save(income);
+                    if (type.equals("outcome")) {
+                        Outcome outcome = new Outcome();
+                        outcome.setOutcomeTime(title.getText().toString());
+                        outcome.setReOutcomeTime(year + "-" + (month + 1));
+                        outcome.setOutcomeMonth(year + "-" + (month + 1));
+                        outcome.setOutcomeWeek(weekofMonth + "");
+                        if (!editAmount.getText().toString().equals("")) {
+                            outcome.setOutcomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            if (!typeEdit.getText().toString().equals("")) {
+                                outcome.setOutcomeType(typeEdit.getText().toString());
+                                if (!editDetail.getText().toString().equals("")) {
+                                    outcome.setOutcomeNote(editDetail.getText().toString());
+                                    db.update(outcome," outcomeId=\"" +id  + "\"");
+                                    Log.e("update","update"+id);
+                                } else {
+                                    outcome.setOutcomeNote("");
+                                    db.update(outcome," outcomeId=\"" +id  + "\"");
+                                    Log.e("update", "update"+id);
+                                }
+                            } else {
+                                Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
-                            Toast.makeText(this,"选择类别",Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
                         }
 
-                    }else{
-                        Toast.makeText(this,"输入金额",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Income income = new Income();
+                        income.setIncomeTime(title.getText().toString());
+                        if (!editAmount.getText().toString().equals("")) {
+                            income.setIncomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            if (!typeEdit.getText().toString().equals("")) {
+                                income.setIncomeType(typeEdit.getText().toString());
+                                if (!editDetail.getText().toString().equals("")) {
+                                    income.setIncomeNote(editDetail.getText().toString());
+                                    db.update(income);
+                                } else {
+                                    income.setIncomeNote("");
+                                    db.update(income);
+                                }
+                            } else {
+                                Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 finish();
@@ -171,7 +228,15 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
         editAmount = (EditText)findViewById(R.id.editAmount);
         editDetail = (EditText)findViewById(R.id.editDetail);
         typeEdit = (EditText)findViewById(R.id.type);
-
+        if(id!=null) {
+            Outcome outcome = db.findById(id, Outcome.class);
+            if (aim.equals("update")) {
+                editAmount.setText(outcome.getOutcomeAmount() + "");
+                typeEdit.setText(outcome.getOutcomeType());
+                editDetail.setText(outcome.getOutcomeNote());
+                typeEdit.setBackgroundResource(R.color.orange);
+            }
+        }
         more.setOnClickListener(this);
         confirm.setOnClickListener(this);
 

@@ -29,6 +29,7 @@ public class SlideListView extends ListView{
     private int slidePosition;
     private View itemView;
     private boolean isSlide = false;
+    //private int velocityX;
     /**
      * 速度追踪对象
      */
@@ -163,8 +164,8 @@ public class SlideListView extends ListView{
     public void scrollRight(){
         removeDirection = RemoveDirection.LEFT;
         //偏移量
-        final int delta = (ScreenWidth - itemView.getScrollX());
-        scroller.startScroll(itemView.getScrollX(),0,delta,0,Math.abs(delta));
+        final int delta = (ScreenWidth + itemView.getScrollX());
+        scroller.startScroll(itemView.getScrollX(),0,-delta,0,Math.abs(delta));
         postInvalidate();
     }
     public void scrollLeft(){

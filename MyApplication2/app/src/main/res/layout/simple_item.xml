@@ -1,39 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:orientation="horizontal"
-    android:background="@drawable/rect_corner_white"
-    android:elevation="4dp"
-     >
-
-    <TextView
-        android:id="@+id/detailAmount"
+    >
+    <ImageView
+        android:id="@+id/update"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="24dp"
-        android:gravity="center"
-        android:layout_weight="1"/>
-    <TextView 
-        android:id="@+id/detailType"
+        android:layout_height="60dp"
+        android:background="@color/orange"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/delete"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="24dp"
-        android:gravity="center"
-        android:layout_weight="1"/>
-    <TextView
-        android:id="@+id/detailTime"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="24dp"
-        android:gravity="center"
-        android:layout_weight="1"/>
+        android:layout_height="60dp"
+        android:background="@color/grey"
+        android:visibility="gone"/>
+    <RelativeLayout
+        android:id="@+id/rl_item"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:elevation="5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:background="@drawable/rect_corner_white">
     <ImageView
         android:id="@+id/detailTypeIcon"
-        android:layout_width="match_parent"
+        android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/icons_edit"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_weight="1"/>
-</LinearLayout>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/icons_shop"
+        />
+    <TextView
+        android:id="@+id/detailTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/detailTypeIcon"
+        android:layout_centerVertical="true"
+        android:textColor="@color/deepgrey"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/detailType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/detailTime"
+        android:layout_centerVertical="true"
+        android:textColor="@color/deepgrey"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/detailAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/deepgrey"
+        android:textSize="16sp"/>
+    </RelativeLayout>
+</FrameLayout>
