@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -17,9 +18,12 @@ import android.widget.TextView;
 
 import net.tsz.afinal.FinalDb;
 
+import java.util.Calendar;
+
 import Base.App;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.BmobInstallation;
+import fragment.AlarmFragment;
 import fragment.BudgetFragment;
 import fragment.DetailFragment;
 import fragment.MoreFragment;
@@ -39,6 +43,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     LinearLayout ll_login;
     ImageView detailImage,reportImage,remindImage,budgetImage,moreImage;
     TextView detailText,reportText,remindText,budgetText,moreText;
+    Calendar calendar;
     int msg = 0;
     int flag =0;
     Intent it2;
@@ -56,7 +61,9 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         DetailFragment deFragment = new DetailFragment();
         initView();
         getSupportFragmentManager().beginTransaction().add(R.id.fragmentBox, deFragment).commit();
+        calendar = Calendar.getInstance();
 //        initClick();
+        Log.e("FrameActivity", ""+calendar.DAY_OF_MONTH+calendar.MONTH);
     }
     public void initToolbar(){
         toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -125,8 +132,8 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.ll_remind:
                 changeColor(remindImage,remindText,R.drawable.remind02);
-//                RemindFragment rmFragment = new RemindFragment();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, rmFragment).commit();
+                AlarmFragment amFragment = new AlarmFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, amFragment).commit();
                 drawerLayout.closeDrawers();
                 break;
             case R.id.ll_budget:
@@ -217,5 +224,6 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
 }

@@ -4,7 +4,7 @@
     <item android:id="@+id/action_date"
         android:title="Edit"
         android:orderInCategory="100"
-        android:icon="@drawable/time_icons"
+        android:icon="@mipmap/iconfont_yue"
         app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_edit"
         android:title="@string/action_edit"

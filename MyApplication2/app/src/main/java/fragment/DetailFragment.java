@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +59,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     private static final int UPDATE = 1234;
     SlideListView lv;
     FinalDb db;
+    int icontype = 0;
     Toolbar toolbar;
     private String type = "outcome";
     private String date;
@@ -67,6 +70,12 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -233,5 +242,21 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
                 }
             });
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_date:
+                Log.e("click","menu");
+                if(icontype == 0) {
+                    Log.e("click", "menu1");
+                    item.setIcon(R.mipmap.iconfont_zhou);
+                    icontype = 1;
+                }else{
+                    item.setIcon(R.mipmap.iconfont_yue);
+                    icontype = 0;
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
