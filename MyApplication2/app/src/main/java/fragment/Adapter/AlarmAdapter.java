@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -15,6 +17,11 @@ import com.example.q97531x.myapplication.R;
 
 import net.tsz.afinal.FinalDb;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import model.AlarmClock;
@@ -25,11 +32,21 @@ import model.AlarmClock;
 public class AlarmAdapter extends BaseExpandableListAdapter{
     private Context context;
     private FinalDb db;
+    private ArrayList<Integer> alarmRate;
     private List<AlarmClock> alarmList;
-    public AlarmAdapter(Context context,FinalDb db) {
+    Time time = new Time();
+    private int dayOfWeek;
+    private DateFormat df = new SimpleDateFormat("HH:mm");
+    private Calendar c1 = Calendar.getInstance(),c2 = Calendar.getInstance();
+    public static final long DAY = 1000L * 60 * 60 * 24;
+    private boolean sameDay = true;
+    private long betweenTime;
+    public AlarmAdapter(Context context,FinalDb db,ArrayList<Integer> alarmRate) {
         this.context = context;
         this.db = db;
+        this.alarmRate = alarmRate;
         alarmList = db.findAll(AlarmClock.class);
+        dayOfWeek = time.weekDay;
     }
 
     @Override
@@ -74,16 +91,50 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
         }
         TextView alarm_time = (TextView)convertView.findViewById(R.id.alarm_time);
         TextView day = (TextView)convertView.findViewById(R.id.day);
+        alarm_time.setText(alarmList.get(groupPosition).getAlarmTime());
+        for(int i = 0;i<alarmRate.size();i++){
+            //如果当前日期与数据库日期一致,判断时间
+            if(alarmRate.get(i) == dayOfWeek){
+
+                String selectTime = alarmList.get(groupPosition).getAlarmTime();
+                String currentTime = time.hour+":"+time.minute;
+                try {
+                    c1.setTime(df.parse(selectTime));
+                    c2.setTime(df.parse(currentTime));
+
+                if(c1.compareTo(c2)<0){
+                    //设置闹钟
+                    betweenTime = df.parse(currentTime).getTime()-(df.parse(selectTime)).getTime();
+                }else if(c1.compareTo(c2)>0){
+                    if(i==alarmRate.size()){
+                        if(alarmRate.get(i) == 7){
+                            betweenTime = alarmRate.get(0)*DAY-(df.parse(currentTime).getTime()-(df.parse(selectTime)).getTime());
+                        }else{
+                            betweenTime = (alarmRate.get(0)+7-alarmRate.get(i))*DAY-(df.parse(currentTime).getTime()-(df.parse(selectTime)).getTime());
+                        }
+                    }else{
+                        betweenTime = (alarmRate.get(i+1)-alarmRate.get(i))*DAY - (df.parse(currentTime).getTime()-(df.parse(selectTime)).getTime());
+                    }
+                }
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+            }
+
+        }
         final Switch switch_btn = (Switch)convertView.findViewById(R.id.switch_btn);
         switch_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent("alarm");
+                PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
                 if(isChecked){
                     //注册闹铃
-                    AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                    Intent intent = new Intent("alarm");
-                    PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
-
+                    Log.e("resg","yes"+betweenTime+"mills"+Calendar.getInstance().getTimeInMillis());
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(),betweenTime,sender);
+                }else{
+                    alarmManager.cancel(sender);
                 }
             }
         });

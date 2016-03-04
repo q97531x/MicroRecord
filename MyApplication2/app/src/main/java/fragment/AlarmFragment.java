@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,6 +25,7 @@ import net.tsz.afinal.FinalDb;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import fragment.Adapter.AlarmAdapter;
 import model.AlarmClock;
 
 
@@ -32,9 +34,10 @@ import model.AlarmClock;
  * 提醒
  */
 public class AlarmFragment extends Fragment implements View.OnClickListener{
-    private ListView clockList;
+    private ExpandableListView clockList;
     private Time t = new Time("GMT+8");
     private int weekDay,hour,minute;
+    private AlarmAdapter adapter;
     private FinalDb db;
     private ArrayList<Integer> alarmRate = new ArrayList<>();
     @Nullable
@@ -42,8 +45,9 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "iconfont.ttf");
         db = FinalDb.create(getActivity());
-        View view = inflater.inflate(R.layout.fragment_alarm,container,false);
-        clockList = (ListView)view.findViewById(R.id.clockList);
+        View view = inflater.inflate(R.layout.fragment_alarm, container, false);
+        clockList = (ExpandableListView)view.findViewById(R.id.clockList);
+
         TextView add_clock = (TextView)view.findViewById(R.id.add_clock);
         add_clock.setTypeface(iconfont);
         add_clock.setOnClickListener(this);
@@ -51,6 +55,8 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
         for(int i=1;i<8;i++){
             alarmRate.add(i);
         }
+        adapter = new AlarmAdapter(getActivity(),db,alarmRate);
+        clockList.setAdapter(adapter);
         weekDay = t.weekDay;
         hour = t.hour;
         minute = t.minute;
@@ -69,9 +75,11 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
                         alarmClock.setAlarmTime(hourOfDay+":"+minute);
                         alarmClock.setAlarmRate(alarmRate);
                         db.save(alarmClock);
+                        adapter.notifyDataSetChanged();
                     }
                 },hour,minute,true);
                 timePickerDialog.show();
+
                 break;
         }
     }
