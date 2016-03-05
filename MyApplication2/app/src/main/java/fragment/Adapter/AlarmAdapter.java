@@ -46,6 +46,8 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
         this.db = db;
         this.alarmRate = alarmRate;
         alarmList = db.findAll(AlarmClock.class);
+        time.setToNow();
+        Log.e("time",time.toString());
         dayOfWeek = time.weekDay;
     }
 
@@ -105,7 +107,9 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
                 if(c1.compareTo(c2)<0){
                     //设置闹钟
                     betweenTime = df.parse(currentTime).getTime()-(df.parse(selectTime)).getTime();
+                    Log.e("clock","小");
                 }else if(c1.compareTo(c2)>0){
+                    Log.e("clock","大");
                     if(i==alarmRate.size()){
                         if(alarmRate.get(i) == 7){
                             betweenTime = alarmRate.get(0)*DAY-(df.parse(currentTime).getTime()-(df.parse(selectTime)).getTime());

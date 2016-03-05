@@ -73,6 +73,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         AlarmClock alarmClock = new AlarmClock();
                         alarmClock.setAlarmTime(hourOfDay+":"+minute);
+                        Log.e("setClock",hourOfDay+":"+minute);
                         alarmClock.setAlarmRate(alarmRate);
                         db.save(alarmClock);
                         adapter.notifyDataSetChanged();
