@@ -35,7 +35,7 @@ import model.AlarmClock;
  */
 public class AlarmFragment extends Fragment implements View.OnClickListener{
     private ExpandableListView clockList;
-    private Time t = new Time("GMT+8");
+    private Time t = new Time();
     private int weekDay,hour,minute;
     private AlarmAdapter adapter;
     private FinalDb db;
@@ -52,7 +52,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
         add_clock.setTypeface(iconfont);
         add_clock.setOnClickListener(this);
         t.setToNow();
-        for(int i=1;i<8;i++){
+        for(int i=0;i<7;i++){
             alarmRate.add(i);
         }
         adapter = new AlarmAdapter(getActivity(),db,alarmRate);
