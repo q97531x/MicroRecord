@@ -138,9 +138,14 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
                 PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
                 if(isChecked){
                     //注册闹铃
+<<<<<<< Updated upstream
                     Log.e("resg","yes"+betweenTime);
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), betweenTime, sender);
                     switch_btn.setChecked(true);
+=======
+                    Log.e("resg",isChecked+"yes"+betweenTime+"mills"+Calendar.getInstance().getTimeInMillis());
+                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(),betweenTime,sender);
+>>>>>>> Stashed changes
                 }else{
                     alarmManager.cancel(sender);
                     switch_btn.setChecked(false);

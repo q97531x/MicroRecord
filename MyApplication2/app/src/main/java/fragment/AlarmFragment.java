@@ -47,7 +47,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
         db = FinalDb.create(getActivity());
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
         clockList = (ExpandableListView)view.findViewById(R.id.clockList);
-
+        t.setToNow();
         TextView add_clock = (TextView)view.findViewById(R.id.add_clock);
         add_clock.setTypeface(iconfont);
         add_clock.setOnClickListener(this);
