@@ -90,7 +90,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="fragment.AlarmReceiver"
+        <receiver android:name="fragment.Broadcast.AlarmReceiver"
             android:process=":remote">
         </receiver>
         <activity
