@@ -3,6 +3,7 @@ package fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -72,15 +73,27 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         AlarmClock alarmClock = new AlarmClock();
-                        alarmClock.setAlarmTime(hourOfDay+":"+minute);
-                        Log.e("setClock",hourOfDay+":"+minute);
+                        alarmClock.setHourOfDay(hourOfDay);
+                        alarmClock.setMinute(minute);
+                        alarmClock.setSecond(Calendar.SECOND);
+                        alarmClock.setMillSecond(Calendar.MILLISECOND);
+                        Log.e("setClock", hourOfDay + ":" + minute);
                         alarmClock.setAlarmRate(alarmRate);
                         db.save(alarmClock);
-                        adapter.notifyDataSetChanged();
+
                     }
                 },hour,minute,true);
                 timePickerDialog.show();
-
+                timePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Log.e("dismiss","dismiss");
+//                        adapter = new AlarmAdapter(getActivity(),db,alarmRate);
+                        AlarmFragment amFragment = new AlarmFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, amFragment).commit();
+//                        adapter.notifyDataSetChanged();
+                    }
+                });
                 break;
         }
     }

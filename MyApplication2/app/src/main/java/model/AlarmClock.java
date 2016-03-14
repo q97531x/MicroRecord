@@ -13,8 +13,12 @@ public class AlarmClock {
     @Id(column="alarmId")
     int alarmId;
     //闹铃日期
-    String alarmTime;
-    //闹铃频率
+    int hourOfDay;
+    int minute;
+    int second;
+    int millSecond;
+//    String alarmTime;
+//    闹铃频率
     ArrayList<Integer> alarmRate;
     public int getAlarmId(){
         return alarmId;
@@ -22,12 +26,39 @@ public class AlarmClock {
     public void setAlarmId(int alarmId){
         this.alarmId = alarmId;
     }
-    public String getAlarmTime(){
-        return alarmTime;
+
+    public int getHourOfDay() {
+        return hourOfDay;
     }
-    public void setAlarmTime(String alarmTime){
-        this.alarmTime = alarmTime;
+
+    public void setHourOfDay(int hourOfDay) {
+        this.hourOfDay = hourOfDay;
     }
+
+    public int getMillSecond() {
+        return millSecond;
+    }
+
+    public void setMillSecond(int millSecond) {
+        this.millSecond = millSecond;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    public int getSecond() {
+        return second;
+    }
+
+    public void setSecond(int second) {
+        this.second = second;
+    }
+
     public ArrayList<Integer> getAlarmRate(){
         return alarmRate;
     }
