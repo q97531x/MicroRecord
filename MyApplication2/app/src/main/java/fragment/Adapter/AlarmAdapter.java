@@ -87,13 +87,17 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if(convertView == null){
             convertView = View.inflate(context, R.layout.alarm_parent_item,null);
         }
         TextView alarm_time = (TextView)convertView.findViewById(R.id.alarm_time);
         TextView day = (TextView)convertView.findViewById(R.id.day);
-        alarm_time.setText(alarmList.get(groupPosition).getHourOfDay()+":"+alarmList.get(groupPosition).getMinute());
+        if(alarmList.get(groupPosition).getMinute()<10) {
+            alarm_time.setText(alarmList.get(groupPosition).getHourOfDay() + ":" + "0" + alarmList.get(groupPosition).getMinute());
+        }else {
+            alarm_time.setText(alarmList.get(groupPosition).getHourOfDay() + ":"  + alarmList.get(groupPosition).getMinute());
+        }
 
 //        for(int i = 0;i<alarmRate.size();i++){
 //            //如果当前日期与数据库日期一致,判断时间
@@ -134,6 +138,11 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
         calendar.set(Calendar.SECOND,alarmList.get(groupPosition).getSecond());
         calendar.set(Calendar.MILLISECOND,alarmList.get(groupPosition).getMillSecond());
         final Switch switch_btn = (Switch)convertView.findViewById(R.id.switch_btn);
+        if(alarmList.get(groupPosition).isCheck()){
+            switch_btn.setChecked(true);
+        }else {
+            switch_btn.setChecked(false);
+        }
         switch_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -143,12 +152,17 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
                 PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
                 if(isChecked){
                     //注册闹铃
-                    Log.e("resg","yes"+betweenTime);
+                    Log.e("resg", "yes" + betweenTime);
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), DAY, sender);
+                    AlarmClock alarmClock = db.findById(groupPosition,AlarmClock.class);
+                    alarmClock.setIsCheck(true);
+                    db.update(alarmClock);
 //                    switch_btn.setChecked(true);
                 }else{
-                    //alarmManager.cancel(sender);
-//                    switch_btn.setChecked(false);
+                    AlarmClock alarmClock = db.findById(groupPosition,AlarmClock.class);
+                    alarmClock.setIsCheck(false);
+                    db.update(alarmClock);
+                    alarmManager.cancel(sender);
                 }
             }
         });

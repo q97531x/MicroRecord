@@ -17,6 +17,7 @@ public class AlarmClock {
     int minute;
     int second;
     int millSecond;
+    boolean isCheck;
 //    String alarmTime;
 //    闹铃频率
     ArrayList<Integer> alarmRate;
@@ -64,5 +65,13 @@ public class AlarmClock {
     }
     public void setAlarmRate(ArrayList<Integer> alarmRate){
         this.alarmRate = alarmRate;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(boolean isCheck) {
+        this.isCheck = isCheck;
     }
 }

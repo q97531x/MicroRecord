@@ -242,11 +242,12 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
                         isExit = false;
                     }
                 }, 2000);
+                return false;
             } else {
                 finish();
                 System.exit(0);
             }
-            return false;
+
         }
         return super.onKeyDown(keyCode, event);
     }

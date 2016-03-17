@@ -77,6 +77,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
                         alarmClock.setMinute(minute);
                         alarmClock.setSecond(Calendar.SECOND);
                         alarmClock.setMillSecond(Calendar.MILLISECOND);
+                        alarmClock.setIsCheck(false);
                         Log.e("setClock", hourOfDay + ":" + minute);
                         alarmClock.setAlarmRate(alarmRate);
                         db.save(alarmClock);
