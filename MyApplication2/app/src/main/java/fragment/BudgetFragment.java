@@ -91,14 +91,14 @@ public class BudgetFragment extends Fragment{
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_budget, container, false);
         budgetList = (ListView) view.findViewById(R.id.budgetList);
-        budgetDate = (TextView) view.findViewById(R.id.budgetDate);
+        //budgetDate = (TextView) view.findViewById(R.id.budgetDate);
         db = FinalDb.create(getActivity());
         //initBudgetBar();
         Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         date = year + "-" + (month + 1);
-        budgetDate.setText(date);
+//        budgetDate.setText(date);
 
         for(int i = 0;i<typeName.length;i++){
             typeList.add(typeName[i]);
@@ -231,7 +231,8 @@ public class BudgetFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        bugListAll = db.findAll(Budget.class," budgetDate=\"" + budgetDate.getText().toString() + "\"");
+        adapter.notifyDataSetChanged();
+//        bugListAll = db.findAll(Budget.class," budgetDate=\"" + budgetDate.getText().toString() + "\"");
 //        adapter.notifyDataSetChanged();//刷新Listview数据
 //        initBudgetBar();
         /*budgetList.setAdapter(adapter);

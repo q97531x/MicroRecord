@@ -5,19 +5,6 @@
     android:background="#FFF">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#ff9327"
-        android:gravity="center"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:textSize="42px"
-            android:text = "更多"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="42dp"
         android:id="@+id/morePassword"
         android:orientation="horizontal"

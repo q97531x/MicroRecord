@@ -47,7 +47,7 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
         this.alarmRate = alarmRate;
         alarmList = db.findAll(AlarmClock.class);
         time.setToNow();
-        Log.e("time",time.toString());
+//        Log.e("time",time.toString());
         dayOfWeek = time.weekDay;
     }
 
@@ -135,8 +135,8 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
         final Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,alarmList.get(groupPosition).getHourOfDay());
         calendar.set(Calendar.MINUTE,alarmList.get(groupPosition).getMinute());
-        calendar.set(Calendar.SECOND,alarmList.get(groupPosition).getSecond());
-        calendar.set(Calendar.MILLISECOND,alarmList.get(groupPosition).getMillSecond());
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
         final Switch switch_btn = (Switch)convertView.findViewById(R.id.switch_btn);
         if(alarmList.get(groupPosition).isCheck()){
             switch_btn.setChecked(true);
@@ -148,18 +148,23 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
                 Intent intent = new Intent(context, AlarmReceiver.class);
-                //intent.setAction("alarm");
+                intent.setAction("alarm");
                 PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
                 if(isChecked){
                     //注册闹铃
-                    Log.e("resg", "yes" + betweenTime);
+                    Log.e("resg", "yes" + calendar.getTimeInMillis());
+                    //如果设置时间小于当前时间,则延后一天
+                    if (calendar.getTimeInMillis() - System.currentTimeMillis() < 0)
+                    {
+                        calendar.roll(Calendar.DATE, 1);
+                    }
                     alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), DAY, sender);
-                    AlarmClock alarmClock = db.findById(groupPosition,AlarmClock.class);
+                    AlarmClock alarmClock = db.findById((groupPosition+1),AlarmClock.class);
                     alarmClock.setIsCheck(true);
                     db.update(alarmClock);
 //                    switch_btn.setChecked(true);
                 }else{
-                    AlarmClock alarmClock = db.findById(groupPosition,AlarmClock.class);
+                    AlarmClock alarmClock = db.findById((groupPosition+1),AlarmClock.class);
                     alarmClock.setIsCheck(false);
                     db.update(alarmClock);
                     alarmManager.cancel(sender);

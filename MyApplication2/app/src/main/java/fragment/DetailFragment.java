@@ -156,7 +156,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     public void DataBase(final String date){
         if(flag == 0){
             final List<Outcome> outcomeList = db.findAllByWhere(Outcome.class, " outcomeMonth=\"" + date + "\"");
-            final ArrayList<Double> listAmount = new ArrayList<>();
+            final ArrayList<Float> listAmount = new ArrayList<>();
             final ArrayList<String> listType = new ArrayList<>();
             final ArrayList<String> listTime = new ArrayList<>();
 

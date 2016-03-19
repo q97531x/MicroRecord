@@ -89,7 +89,7 @@ public class CalculatorActivity extends ActionBarActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag == false) {
+                if(!flag) {
                     if(command==null) {
                         if (str_num.toString() != "") {
                             num1 = Double.parseDouble(str_num.toString());
@@ -108,7 +108,7 @@ public class CalculatorActivity extends ActionBarActivity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag == false) {
+                if(!flag) {
                     if(command==null) {
                         if (str_num.toString() != "") {
                             num1 = Double.parseDouble(str_num.toString());
@@ -127,7 +127,7 @@ public class CalculatorActivity extends ActionBarActivity {
         multiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag == false) {
+                if(!flag) {
                     if(command==null) {
                         if (str_num.toString() != "") {
                             num1 = Double.parseDouble(str_num.toString());
@@ -137,7 +137,7 @@ public class CalculatorActivity extends ActionBarActivity {
                             str_num = new StringBuffer("");
                         }
                     }
-                }else if(flag == true){
+                }else{
                     flag = false;
                 }
                 command = "*";
@@ -146,7 +146,7 @@ public class CalculatorActivity extends ActionBarActivity {
         divide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag == false) {
+                if(!flag) {
                     if(command==null) {
                         if (str_num.toString() != "") {
                             num1 = Double.parseDouble(str_num.toString());
@@ -255,7 +255,7 @@ public class CalculatorActivity extends ActionBarActivity {
         point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(haspoint == false){
+                if(!haspoint){
                     haspoint = true;
                     if(str_num.length()<9) {
                         str_num.append(".");
@@ -352,7 +352,7 @@ public class CalculatorActivity extends ActionBarActivity {
                 Budget budget = new Budget();
                 budget.setBudgetType(type);
                 budget.setBudgetDate(budgetDate);
-                budget.setBudgetAccount(Double.parseDouble(result.getText().toString()));
+                budget.setBudgetAccount(Float.parseFloat(result.getText().toString()));
                 if(tag == 1) {
                     db.update(budget," budgetType=\"" +type + "\"");
                     Log.e("update","update");

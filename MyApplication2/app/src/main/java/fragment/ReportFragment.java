@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Switch;
@@ -49,7 +50,8 @@ import model.Outcome;
 public class ReportFragment extends Fragment {
     FinalDb db;
     Toolbar toolbar;
-    TextView reOutcomeBtn,reIncomeBtn,reportDate;
+    LinearLayout reOutcomeBtn,reIncomeBtn;
+    TextView reportDate;
     private PieChart mChart;
     ListView reList;
     ArrayList outcomeType,incomeType;
@@ -78,8 +80,8 @@ public class ReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_report,container,false);
         db = FinalDb.create(getActivity());
         reportDate = (TextView)view.findViewById(R.id.reportDate);
-        reOutcomeBtn = (TextView)view.findViewById(R.id.reOutcomeBtn);
-        reIncomeBtn = (TextView)view.findViewById(R.id.reIncomeBtn);
+        reOutcomeBtn = (LinearLayout)view.findViewById(R.id.reOutcomeBtn);
+        reIncomeBtn = (LinearLayout)view.findViewById(R.id.reIncomeBtn);
 
 //        reList = (ListView)view.findViewById(R.id.reList);
         mChart = (PieChart) view.findViewById(R.id.pieChart);

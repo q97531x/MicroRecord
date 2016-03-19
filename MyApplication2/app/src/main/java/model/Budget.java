@@ -14,7 +14,7 @@ public class Budget {
     int typeId;
     String budgetDate;
     String budgetType;
-    double budgetAccount;
+    float budgetAccount;
     public int getTypeId(){
         return typeId;
     }
@@ -33,10 +33,12 @@ public class Budget {
     public void setBudgetType(String budgetType){
         this.budgetType = budgetType;
     }
-    public double getBudgetAccount(){
+
+    public float getBudgetAccount() {
         return budgetAccount;
     }
-    public void setBudgetAccount(double budgetAccount){
+
+    public void setBudgetAccount(float budgetAccount) {
         this.budgetAccount = budgetAccount;
     }
 }

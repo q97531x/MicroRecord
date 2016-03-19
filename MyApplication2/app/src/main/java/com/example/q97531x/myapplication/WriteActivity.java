@@ -45,6 +45,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
     ArrayList<View> views;
     private int year,month,day,weekofMonth,dayofWeek;
     private Calendar calendar;
+    private boolean isComplete = false;
     private static final int GETTYPE = 23333;
     private Intent intent;
     private String type,aim,id;
@@ -102,15 +103,17 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                         outcome.setOutcomeMonth(year + "-" + (month + 1));
                         outcome.setOutcomeWeek(weekofMonth + "");
                         if (!editAmount.getText().toString().equals("")) {
-                            outcome.setOutcomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            outcome.setOutcomeAmount((float) Double.parseDouble(editAmount.getText().toString()));
                             if (!typeEdit.getText().toString().equals("")) {
                                 outcome.setOutcomeType(typeEdit.getText().toString());
                                 if (!editDetail.getText().toString().equals("")) {
                                     outcome.setOutcomeNote(editDetail.getText().toString());
                                     db.save(outcome);
+                                    isComplete = true;
                                 } else {
                                     outcome.setOutcomeNote("");
                                     db.save(outcome);
+                                    isComplete = true;
                                 }
                             } else {
                                 Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
@@ -130,9 +133,11 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                                 if (!editDetail.getText().toString().equals("")) {
                                     income.setIncomeNote(editDetail.getText().toString());
                                     db.save(income);
+                                    isComplete = true;
                                 } else {
                                     income.setIncomeNote("");
                                     db.save(income);
+                                    isComplete = true;
                                 }
                             } else {
                                 Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
@@ -150,17 +155,19 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                         outcome.setOutcomeMonth(year + "-" + (month + 1));
                         outcome.setOutcomeWeek(weekofMonth + "");
                         if (!editAmount.getText().toString().equals("")) {
-                            outcome.setOutcomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            outcome.setOutcomeAmount((float) Double.parseDouble(editAmount.getText().toString()));
                             if (!typeEdit.getText().toString().equals("")) {
                                 outcome.setOutcomeType(typeEdit.getText().toString());
                                 if (!editDetail.getText().toString().equals("")) {
                                     outcome.setOutcomeNote(editDetail.getText().toString());
                                     db.update(outcome," outcomeId=\"" +id  + "\"");
                                     Log.e("update","update"+id);
+                                    isComplete = true;
                                 } else {
                                     outcome.setOutcomeNote("");
                                     db.update(outcome," outcomeId=\"" +id  + "\"");
                                     Log.e("update", "update"+id);
+                                    isComplete = true;
                                 }
                             } else {
                                 Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
@@ -180,9 +187,11 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                                 if (!editDetail.getText().toString().equals("")) {
                                     income.setIncomeNote(editDetail.getText().toString());
                                     db.update(income);
+                                    isComplete = true;
                                 } else {
                                     income.setIncomeNote("");
                                     db.update(income);
+                                    isComplete = true;
                                 }
                             } else {
                                 Toast.makeText(this, "选择类别", Toast.LENGTH_SHORT).show();
@@ -193,7 +202,9 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                         }
                     }
                 }
-                finish();
+                if(isComplete) {
+                    finish();
+                }
                 break;
             case R.id.back:
                 finish();
@@ -239,6 +250,9 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
         }
         more.setOnClickListener(this);
         confirm.setOnClickListener(this);
+    }
+    //判断是否超支
+    public void sendSms(){
 
     }
 }

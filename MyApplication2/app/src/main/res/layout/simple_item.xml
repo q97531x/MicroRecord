@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     >
-    <ImageView
+    <!--<ImageView
         android:id="@+id/update"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/grey"
-        android:visibility="gone"/>
+        android:visibility="gone"/>-->
     <RelativeLayout
         android:id="@+id/rl_item"
     android:layout_width="match_parent"

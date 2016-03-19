@@ -73,7 +73,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("明细");
-        toolbar.setSubtitle("2016.2.25");
+        //toolbar.setSubtitle("2016.2.25");
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerlayout);
         drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,
                 R.string.drawer_close);
@@ -123,33 +123,38 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
             case R.id.forget_password:
                 break;
             case R.id.ll_detail:
-                changeColor(detailImage,detailText,R.drawable.detail02);
+                changeColor(detailImage, detailText, R.drawable.detail02);
                 DetailFragment deFragment = new DetailFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, deFragment).commit();
+                toolbar.setTitle("明细");
                 drawerLayout.closeDrawers();
                 break;
             case R.id.ll_report:
                 changeColor(reportImage,reportText,R.drawable.report02);
                 ReportFragment reFragment = new ReportFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, reFragment).commit();
+                toolbar.setTitle("报表");
                 drawerLayout.closeDrawers();
                 break;
             case R.id.ll_remind:
                 changeColor(remindImage,remindText,R.drawable.remind02);
                 AlarmFragment amFragment = new AlarmFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, amFragment).commit();
+                toolbar.setTitle("提醒");
                 drawerLayout.closeDrawers();
                 break;
             case R.id.ll_budget:
                 changeColor(budgetImage,budgetText,R.drawable.budget02);
                 BudgetFragment budgetFragment = new BudgetFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox,budgetFragment).commit();
+                toolbar.setTitle("预算");
                 drawerLayout.closeDrawers();
                 break;
             case R.id.ll_more:
                 changeColor(moreImage,moreText,R.drawable.more02);
                 MoreFragment moreFragment = new MoreFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox,moreFragment).commit();
+                toolbar.setTitle("更多");
                 drawerLayout.closeDrawers();
                 break;
         }

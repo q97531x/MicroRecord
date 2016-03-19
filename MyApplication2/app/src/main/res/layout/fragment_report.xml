@@ -5,23 +5,70 @@
     android:background="#FFF"
     >
     <LinearLayout
+        android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:background="@drawable/nav_bg1"
+        android:layout_height="56dp"
         android:orientation="horizontal">
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/reOutcomeBtn"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/white"
+            android:layout_weight="1"
+            android:showDividers="middle">
+            <ImageView
+                android:id = "@+id/detailOutcomeImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src = "@drawable/icons_outcome3"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/outcomeText"
+                android:gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_weight="1"
+                android:text="支出"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/reIncomeBtn"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/center_orange"
+            android:divider="@drawable/income_underline"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id = "@+id/detailIncomeImg"
+                android:src = "@drawable/icons_income02"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/incomeText"
+                android:gravity="center_vertical"
+                android:textSize="18dp"
+                android:layout_weight="1"
+                android:text="收入"/>
+        </LinearLayout>
+    </LinearLayout>
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        &lt;!&ndash;<TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:layout_weight="1"
         android:textColor="#FFF"
         android:text="报表"
-        android:textSize="48px"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+        android:textSize="48px"/>&ndash;&gt;
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -42,11 +89,10 @@
                 android:textColor="#FFF"
                 android:gravity="center"
                 android:text="收入"/>
-        </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="24dp"
         android:id="@+id/reportDate"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
@@ -60,13 +106,14 @@
         <com.github.mikephil.charting.charts.PieChart
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
         android:id="@+id/pieChart"
         android:layout_weight="1">
         </com.github.mikephil.charting.charts.PieChart>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"/>
+            android:layout_weight="4"/>
     </LinearLayout>
     <!--<ListView
         android:layout_width="match_parent"

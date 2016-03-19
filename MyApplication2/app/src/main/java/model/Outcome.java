@@ -17,7 +17,7 @@ public class Outcome {
     String outcomeWeek;//周
     String reOutcomeTime;
     String outcomeHour;//记录的时间
-    double outcomeAmount;
+    float outcomeAmount;
     String outcomeNote;
     public int getOutcomeId() {
         return outcomeId;
@@ -55,10 +55,11 @@ public class Outcome {
     public void setOutcomeHour(String outcomeHour){
         this.outcomeHour = outcomeHour;
     }
-    public double getOutcomeAmount() {
+    public float getOutcomeAmount() {
         return outcomeAmount;
     }
-    public void setOutcomeAmount(double outcomeAmount) {
+
+    public void setOutcomeAmount(float outcomeAmount) {
         this.outcomeAmount = outcomeAmount;
     }
     public String getOutcomeNote() {

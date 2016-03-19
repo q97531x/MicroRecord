@@ -55,8 +55,9 @@ public class PasswordActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (haspass == false) {
-                    flag++;
+                if (!haspass) {
+//                    flag++;
+                    flag = s.toString().length();
                     switch (flag) {
                         case 0:
                             passwordImg.setImageResource(R.drawable.cordbg);
@@ -122,7 +123,71 @@ public class PasswordActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
+                /*if (!haspass) {
+                    flag++;
+                    switch (flag) {
+                        case 0:
 
+                            passwordImg.setImageResource(R.drawable.cordbg);
+                            break;
+                        case 1:
+                            passwordImg.setImageResource(R.drawable.cord1);
+                            break;
+                        case 2:
+                            passwordImg.setImageResource(R.drawable.cord2);
+                            break;
+                        case 3:
+                            passwordImg.setImageResource(R.drawable.cord3);
+                            break;
+                        case 4:
+                            passwordImg.setImageResource(R.drawable.cord4);
+                            break;
+                        case 5:
+                            passwordImg.setImageResource(R.drawable.cord5);
+                            break;
+                        case 6:
+                            if (putin == 0) {
+                                passwordImg.setImageResource(R.drawable.cordbg);
+                                pass.append(passwordEdit.getText().toString());
+                                Toast.makeText(PasswordActivity.this, "save" + pass, Toast.LENGTH_SHORT).show();
+                                password = pass.toString();
+                                pass.setLength(0);
+                                flag = -1;
+                                passwordText.setText("请再次输入六位数密码");
+                                passwordEdit.setText("");
+                                putin = 1;
+                            } else if (putin == 1) {
+                                pass.append(passwordEdit.getText().toString());
+                                Toast.makeText(PasswordActivity.this, "save" + pass, Toast.LENGTH_SHORT).show();
+                                if (password.equals(pass.toString())) {
+                                    passwordImg.setImageResource(R.drawable.cord6);
+                                    //储存到密码表
+                                    List<Password> List = db.findAll(Password.class);
+                                    Password pass = new Password();
+                                    pass.setPassword(password);
+                                    pass.setHasPassword(true);
+                                    if(List.size()>0){
+                                        db.update(pass,"id like 'i'");
+                                    }else {
+                                        db.save(pass);
+                                    }
+                                    //hasPassword haspassword = (hasPassword) getApplication();
+                                    //haspassword.setHasPassword(true);
+                                    Intent intent = new Intent(PasswordActivity.this, FrameActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(PasswordActivity.this, "密码不符", Toast.LENGTH_SHORT).show();
+                                    passwordImg.setImageResource(R.drawable.cordbg);
+                                    putin = 0;
+                                    passwordText.setText("请输入六位数密码");
+                                    password = "";
+                                    pass.setLength(0);
+                                    flag = -1;
+                                }
+                            }
+                            break;
+                    }
+                }*/
             }
         });
     }

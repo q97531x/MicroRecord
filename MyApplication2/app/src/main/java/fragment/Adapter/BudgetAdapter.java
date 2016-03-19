@@ -31,10 +31,10 @@ public class BudgetAdapter extends BaseAdapter{
     FinalDb db;
     String date;
     //设置的预算
-    double budget;
-    double outcome;
-    double a;
-    double b;
+    float budget;
+    float outcome;
+    float a;
+    float b;
     //类型集合
     ArrayList<String> type;
     ArrayList<Integer> typeIcon;
@@ -111,6 +111,7 @@ public class BudgetAdapter extends BaseAdapter{
                 }else{
                     holder.txAccount.setText("结余"+b);
                 }
+                outcome = 0;
             }
         }
         return convertView;

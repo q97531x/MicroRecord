@@ -16,10 +16,10 @@ import java.util.ArrayList;
  */
 public class DetailAdapter extends BaseAdapter{
     private Context context;
-    public ArrayList<Double> detailAmount;
+    public ArrayList<Float> detailAmount;
     private ArrayList<String> detailTime;
     private ArrayList<String> detailType;
-    public DetailAdapter(Context context,ArrayList<Double> detailAmount,ArrayList<String> detailTime,ArrayList<String> detailType) {
+    public DetailAdapter(Context context,ArrayList<Float> detailAmount,ArrayList<String> detailTime,ArrayList<String> detailType) {
         this.context = context;
         this.detailAmount = detailAmount;
         this.detailTime = detailTime;
