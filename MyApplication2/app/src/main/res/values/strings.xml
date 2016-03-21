@@ -21,6 +21,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_avater">AvaterActivity</string>
+    <string name="title_save">保存</string>
 
 
     <!-- icon-->

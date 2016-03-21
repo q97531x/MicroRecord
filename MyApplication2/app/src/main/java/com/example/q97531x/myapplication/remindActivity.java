@@ -132,7 +132,7 @@ public class remindActivity extends AppCompatActivity {
                                 remind = new Remind();
                                 //remind.setId(0);
                                 remind.setTag(1);
-                                remind.setBalance(balance);
+//                                remind.setBalance(balance);
                                 //判断是保存还是更新
                                 if(remindList.size() == 0){//数据库未保存任何字段，save；
                                     db.save(remind);
@@ -375,7 +375,7 @@ public class remindActivity extends AppCompatActivity {
                     flag1 = false;
                 } else if (remindList.get(i).getTag() == 1) {
                     balanceView.setImageResource(R.drawable.btn1);
-                    balanceText.setText("" + remindList.get(i).getBalance());
+//                    balanceText.setText("" + remindList.get(i).getBalance());
                     flag2 = false;
                 }
             }

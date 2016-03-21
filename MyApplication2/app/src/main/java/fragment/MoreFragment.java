@@ -20,6 +20,7 @@ import com.example.q97531x.myapplication.AboutActivity;
 import com.example.q97531x.myapplication.MainActivity;
 import com.example.q97531x.myapplication.PasswordActivity;
 import com.example.q97531x.myapplication.R;
+import com.example.q97531x.myapplication.SetRemindActivity;
 import com.example.q97531x.myapplication.SuggestActivity;
 import com.example.q97531x.myapplication.remindActivity;
 
@@ -88,7 +89,7 @@ public class MoreFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(getActivity(),"提醒功能仍在施工中，如有不便，敬请谅解",Toast.LENGTH_LONG).show();
-                    Intent intent_remind = new Intent(getActivity(),remindActivity.class);
+                    Intent intent_remind = new Intent(getActivity(),SetRemindActivity.class);
                     startActivity(intent_remind);
                 }
             });

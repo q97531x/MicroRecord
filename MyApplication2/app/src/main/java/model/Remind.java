@@ -12,7 +12,8 @@ public class Remind {
     int id;
     int tag;//用于标识使用百分比或余额
     int percent;
-    int balance;
+    int style;//0标示振动,1标示响铃,2标示短信
+    String phoneNumber;
 
     public int getId(){
         return id;
@@ -32,11 +33,20 @@ public class Remind {
     public void setPercent(int percent){
         this.percent = percent;
     }
-    public int getBalance(){
-        return balance;
-    }
-    public void setBalance(int balance){
-        this.balance = balance;
+
+    public int getStyle() {
+        return style;
     }
 
+    public void setStyle(int style) {
+        this.style = style;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
