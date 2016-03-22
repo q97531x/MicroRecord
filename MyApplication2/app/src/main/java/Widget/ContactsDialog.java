@@ -23,9 +23,9 @@ import util.Utils;
  */
 public class ContactsDialog extends Dialog implements View.OnClickListener{
     private LayoutInflater inflater;
-    private String phone = "";
+    private String phone = "",phone_name = "";
     private Context context;
-    private EditText phone_num;
+    private EditText phone_num,name;
     private TextView confirm,cancel;
     public ContactsDialog(Context context) {
         super(context);
@@ -42,7 +42,9 @@ public class ContactsDialog extends Dialog implements View.OnClickListener{
 
     private void initView() {
         View view = inflater.inflate(R.layout.dialog_contacts,null);
+        setContentView(view);
         phone_num = (EditText)view.findViewById(R.id.phone_num);
+        name = (EditText)view.findViewById(R.id.name);
         confirm = (TextView)view.findViewById(R.id.confirm);
         cancel = (TextView)view.findViewById(R.id.cancel);
         confirm.setOnClickListener(this);
@@ -61,6 +63,7 @@ public class ContactsDialog extends Dialog implements View.OnClickListener{
             case R.id.confirm:
                 if(!phone_num.getText().toString().equals("")){
                     phone = phone_num.getText().toString();
+                    phone_name = name.getText().toString();
                     dismiss();
                 }else{
                     Utils.toast("请输入联系人手机号");
@@ -73,5 +76,9 @@ public class ContactsDialog extends Dialog implements View.OnClickListener{
     }
     public String getNumber(){
         return phone;
+    }
+
+    public String getPhone_name() {
+        return phone_name;
     }
 }

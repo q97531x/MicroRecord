@@ -14,6 +14,7 @@ public class Remind {
     int percent;
     int style;//0标示振动,1标示响铃,2标示短信
     String phoneNumber;
+    String name;
 
     public int getId(){
         return id;
@@ -48,5 +49,13 @@ public class Remind {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

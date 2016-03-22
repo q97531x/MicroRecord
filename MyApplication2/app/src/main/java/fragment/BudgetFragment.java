@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,7 +86,9 @@ public class BudgetFragment extends Fragment{
             }
         }
     }
-
+    public void setTitle(Toolbar toolbar){
+        toolbar.setTitle("预算");
+    }
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -111,20 +114,22 @@ public class BudgetFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 List<Budget> budgets = db.findAllByWhere(Budget.class, " budgetDate=\"" + date + "\"");
-                Intent intent = new Intent(getActivity(), CalculatorActivity.class);
+                if(position!=0) {
+                    Intent intent = new Intent(getActivity(), CalculatorActivity.class);
 //                Bundle bd = new Bundle();
-                intent.putExtra("type", typeList.get(position));
-                if(budgets.size()>0) {
-                    for (int i = 0; i < budgets.size(); i++) {
-                        if (budgets.get(i).getBudgetType().equals(typeList.get(position))) {
-                           intent.putExtra("tag", 1);
-                        }else {
-                            intent.putExtra("tag", -1);
+                    intent.putExtra("type", typeList.get(position));
+                    if (budgets.size() > 0) {
+                        for (int i = 0; i < budgets.size(); i++) {
+                            if (budgets.get(i).getBudgetType().equals(typeList.get(position))) {
+                                intent.putExtra("tag", 1);
+                            } else {
+                                intent.putExtra("tag", -1);
+                            }
                         }
+                    } else {
+                        intent.putExtra("tag", -1);
                     }
-                }else {
-                    intent.putExtra("tag", -1);
-                }
+
                 /*if (!text.get(position).toString().equals("预算未设置")) {
                     bd.putInt("tag", 1);
                 } else {
@@ -132,7 +137,8 @@ public class BudgetFragment extends Fragment{
                 }*/
 //                Log.e("pp",text.get(position).toString());
 //                intent.putExtra("bd", bd);
-                startActivityForResult(intent,setBudget);
+                    startActivityForResult(intent, setBudget);
+                }
             }
         });
         return view;

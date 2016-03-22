@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,7 +65,9 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
         Log.e("week",""+t.weekDay+t.monthDay);
         return view;
     }
-
+    public void setTitle(Toolbar toolbar){
+        toolbar.setTitle("提醒");
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){

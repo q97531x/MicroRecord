@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -228,4 +229,8 @@ public class MoreFragment extends Fragment {
             });
             return view;
         }
+
+    public void setTitle(Toolbar toolbar){
+        toolbar.setTitle("更多");
+    }
 }

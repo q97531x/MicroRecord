@@ -23,6 +23,7 @@ import Base.App;
  * Created by XmacZone on 16/3/4.
  * 闹铃广播接收器
  */
+/*
 public class AlarmReceiver extends BroadcastReceiver{
 //    private Vibrator vibrator;
     public final static String ACTION_BTN = "btn";
@@ -71,3 +72,4 @@ public class AlarmReceiver extends BroadcastReceiver{
         App.context.registerReceiver(this, intentFilter);
     }
 }
+*/

@@ -141,6 +141,10 @@ public class ReportFragment extends Fragment {
         });
         return view;
 }
+
+    public void setTitle(Toolbar toolbar){
+        toolbar.setTitle("报表");
+    }
     public void setData (int count,List list){
         ArrayList<Entry> alist = new ArrayList<Entry>();
         ArrayList<String> xlist = new ArrayList<String>();

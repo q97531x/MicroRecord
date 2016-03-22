@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -22,15 +26,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.q97531x.myapplication.Broadcast.RemindBroadcast;
+
 import net.tsz.afinal.FinalDb;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import model.Budget;
 import model.Income;
 import model.Outcome;
+import model.Remind;
+import util.Utils;
 
 /**
  * Created by 渡渡鸟 on 2016/1/4.
@@ -122,7 +132,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                         } else {
                             Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
                         }
-
+                        isOverSpend(db);
                     } else {
                         Income income = new Income();
                         income.setIncomeTime(title.getText().toString());
@@ -252,7 +262,48 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
         confirm.setOnClickListener(this);
     }
     //判断是否超支
-    public void sendSms(){
+    public void isOverSpend(FinalDb db){
+        //获得设置百分比
+        float budget = 0,outcome = 0;
+        List<Remind> reminds = db.findAll(Remind.class);
+        if(reminds.size()>0){
+            float percent = reminds.get(0).getPercent()/100;
+            float py;
+            List<Budget> budgets = db.findAll(Budget.class);
+            List<Outcome> outcomes = db.findAll(Outcome.class);
+            if(budgets.size()>0&&outcomes.size()>0) {
+                for (int i = 0; i < budgets.size(); i++) {
+                    budget = budget + budgets.get(i).getBudgetAccount();
+                }
+                for (int i = 0; i < outcomes.size(); i++) {
+                    outcome = outcome + outcomes.get(i).getOutcomeAmount();
+                }
+                py = outcome / budget;
+                if (py >= percent) {
+                    //超支
+                    Intent intent = new Intent(this, RemindBroadcast.class);
+                    switch (reminds.get(0).getStyle()) {
+                        case 0:
+                            Log.e("vb","vb");
+                            intent.setAction("Vibrator");
+                            sendBroadcast(intent);
 
+                            break;
+                        case 1:
+                            intent.setAction("Ring");
+                            sendBroadcast(intent);
+                            break;
+                        case 2:
+                            intent.setAction("Sms");
+                            intent.putExtra("phoneNum", reminds.get(0).getPhoneNumber());
+                            intent.putExtra("phoneName", reminds.get(0).getName());
+                            sendBroadcast(intent);
+//                        sendSms(reminds.get(0).getPhoneNumber(),reminds.get(0).getName());
+//                        finish();
+                            break;
+                    }
+                }
+            }
+        }
     }
 }

@@ -76,6 +76,29 @@ public class BudgetAdapter extends BaseAdapter{
         if(position == 0){
             holder.typeicon.setBackgroundResource(typeIcon.get(position));
             holder.txName.setText(type.get(position));
+            List<Budget> all = db.findAll(Budget.class);
+            List<Outcome> outcomes = db.findAll(Outcome.class);
+            float allBudget = 0,allOutcome = 0;
+            for(int i = 0;i<all.size();i++){
+                allBudget = allBudget+all.get(i).getBudgetAccount();
+            }
+            for (int i = 0;i<outcomes.size();i++){
+                allOutcome = allOutcome+outcomes.get(i).getOutcomeAmount();
+            }
+            a = allOutcome/allBudget;
+            if(a>1){
+                a = 1;
+            }
+            width = (int)(a*100);
+//                Log.e("budget",""+budget+a+"xx"+width);
+            holder.txBudget.setText("预算" + allBudget + "￥");
+            holder.progress.setProgress(width);
+            b = allBudget - allOutcome;
+            if(b<0){
+                holder.txAccount.setText("超支"+(-b));
+            }else{
+                holder.txAccount.setText("结余"+b);
+            }
         }else {
             holder.typeicon.setBackgroundResource(typeIcon.get(position));
             holder.txName.setText(type.get(position));

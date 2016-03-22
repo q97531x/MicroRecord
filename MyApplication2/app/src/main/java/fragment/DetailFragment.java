@@ -51,7 +51,7 @@ import model.Outcome;
  */
 public class DetailFragment extends Fragment implements View.OnClickListener{
     //Context ctx;
-    //final Toolbar toolbar = null;
+
     int year,month,day,flag = 0;
     LinearLayout outcomeLayout,incomeLayout;
     ImageView detailOutcome,detailIncome;
@@ -60,7 +60,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     SlideListView lv;
     FinalDb db;
     int icontype = 0;
-    Toolbar toolbar;
+//    Toolbar toolbar;
     private String type = "outcome";
     private String date;
     public DetailFragment(){
@@ -152,7 +152,9 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
         super.onResume();
 //        DataBase(toolbar);
     }
-
+    public void setTitle(Toolbar toolbar){
+        toolbar.setTitle("账单");
+    }
     public void DataBase(final String date){
         if(flag == 0){
             final List<Outcome> outcomeList = db.findAllByWhere(Outcome.class, " outcomeMonth=\"" + date + "\"");

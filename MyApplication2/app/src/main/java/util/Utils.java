@@ -1,5 +1,6 @@
 package util;
 
+import android.content.Context;
 import android.text.TextPaint;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,10 @@ public class Utils {
     //Toast显示
     public static void toast(String toast){
         Toast.makeText(App.context,toast,Toast.LENGTH_SHORT);
+    }
+    //带context的Toast
+    public static void toast(Context context,String toast){
+        Toast.makeText(context,toast,Toast.LENGTH_SHORT);
     }
     //加粗中文字体
     public static void boldText(TextView textView){
