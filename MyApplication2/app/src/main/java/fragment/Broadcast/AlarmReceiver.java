@@ -23,7 +23,6 @@ import Base.App;
  * Created by XmacZone on 16/3/4.
  * 闹铃广播接收器
  */
-/*
 public class AlarmReceiver extends BroadcastReceiver{
 //    private Vibrator vibrator;
     public final static String ACTION_BTN = "btn";
@@ -48,11 +47,11 @@ public class AlarmReceiver extends BroadcastReceiver{
             builder.setContentTitle("闹钟");
             builder.setFullScreenIntent(pendingIntent, true);
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.alarm_notification);
-            remoteViews.setTextViewText(R.id.text, "闹钟");
+            /*remoteViews.setTextViewText(R.id.text, "闹钟");
             Intent pause = new Intent(context,NotificationBroadcast.class);
 //            pause.setAction(PAUSE);
             PendingIntent pendingPause = PendingIntent.getBroadcast(context, 1, pause, PendingIntent.FLAG_UPDATE_CURRENT);
-            remoteViews.setOnClickPendingIntent(R.id.pause, pendingPause);
+            remoteViews.setOnClickPendingIntent(R.id.pause, pendingPause);*/
             Notification notification = builder.build();
             notification.contentView = remoteViews;
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -72,4 +71,3 @@ public class AlarmReceiver extends BroadcastReceiver{
         App.context.registerReceiver(this, intentFilter);
     }
 }
-*/

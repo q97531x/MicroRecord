@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.List;
 
 //import fragment.Broadcast.AlarmReceiver;
+import fragment.Broadcast.AlarmReceiver;
 import model.AlarmClock;
 
 /**
@@ -148,7 +149,7 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                Intent intent = new Intent(context, RemindBroadcast.class);
+                Intent intent = new Intent(context, AlarmReceiver.class);
                 intent.setAction("alarm");
                 PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
                 if(isChecked){
