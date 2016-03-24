@@ -18,6 +18,7 @@ import com.example.q97531x.myapplication.FrameActivity;
 import com.example.q97531x.myapplication.R;
 
 import Base.App;
+import util.Utils;
 
 /**
  * Created by XmacZone on 16/3/4.
@@ -33,41 +34,44 @@ public class AlarmReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
 //        Toast.makeText(context, "闹铃响了", Toast.LENGTH_SHORT).show();
         String action = intent.getAction();
+        Log.e("action",action);
         if(action.equals(PAUSE)){
             //闹钟暂停5分钟后再响
-            Log.e("pause","pause");
+//            Utils.toast(context,"pause");
+            Utils.stopVibrator(context);
+            Intent intent1 = new Intent(context,FrameActivity.class);
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent1);
         }else {
-            ring(context);
+//            Log.e("alarm", "接收到了");
+//            Utils.toast(context,"vibrator");
+            Utils.ring(context);
             Notification.Builder builder = new Notification.Builder(context);
-            Intent it = new Intent(context, FrameActivity.class);
+            /*Intent it = new Intent(context, FrameActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, it, 0);
+            builder.setContentIntent(pendingIntent);*/
+            Intent it = new Intent(context,AlarmReceiver.class);
+            it.setAction(PAUSE);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, it, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(pendingIntent);
-            builder.setSmallIcon(R.drawable.icon_main);
+            builder.setSmallIcon(R.drawable.remind01);
             builder.setAutoCancel(true);
-            builder.setContentTitle("闹钟");
+            builder.setContentTitle("记账提醒");
+            builder.setContentText("去记账了(停止闹钟)");
             builder.setFullScreenIntent(pendingIntent, true);
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.alarm_notification);
+//            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.alarm_notification);
             /*remoteViews.setTextViewText(R.id.text, "闹钟");
             Intent pause = new Intent(context,NotificationBroadcast.class);
 //            pause.setAction(PAUSE);
             PendingIntent pendingPause = PendingIntent.getBroadcast(context, 1, pause, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.pause, pendingPause);*/
             Notification notification = builder.build();
-            notification.contentView = remoteViews;
+//            notification.contentView = remoteViews;
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(2, notification);
-            Log.e("alarm", "接收到了");
+
         }
     }
-    public void ring(Context context){
-        Vibrator vibrator = (Vibrator)context.getSystemService(context.VIBRATOR_SERVICE);
-        long [] pattern = {0, 200, 3000, 500, 2000, 1000};   // 停止 开启 停止 开启
-        vibrator.vibrate(pattern, 4);           //重复两次上面的pattern 如果只想震动一次，index设为-1
-    }
-    private void intiReceiver() {
-//        mReceiver = new NotificationBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTION_BTN);
-        App.context.registerReceiver(this, intentFilter);
-    }
+
+
 }

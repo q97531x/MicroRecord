@@ -48,6 +48,9 @@
             android:name=".CheckPasswordActivity"
             android:label="@string/title_activity_check_password"></activity>
         <activity
+            android:name=".AvatarActivity"
+            ></activity>
+        <activity
             android:name=".SplashActivity"
             android:label="小小账簿">
             <intent-filter>

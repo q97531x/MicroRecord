@@ -32,6 +32,7 @@ import fragment.BudgetFragment;
 import fragment.DetailFragment;
 import fragment.MoreFragment;
 import fragment.ReportFragment;
+import util.Utils;
 
 /**
  * Created by Administrator on 2015/7/27.
@@ -48,9 +49,6 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     ImageView detailImage,reportImage,remindImage,budgetImage,moreImage;
     TextView detailText,reportText,remindText,budgetText,moreText;
     Calendar calendar;
-    int msg = 0;
-    int flag =0;
-    Intent it2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         db = FinalDb.create(this);
@@ -61,6 +59,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         BmobInstallation.getCurrentInstallation(this).save();
         // 启动推送服务
         BmobPush.startWork(this, "ceb49bcc137f6f2ec5de0326822a33b3");
+
         initToolbar();
         DetailFragment deFragment = new DetailFragment();
         initView();
@@ -233,7 +232,16 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
+        /*if(Utils.notification) {
+            it = getIntent();
+            Utils.toast("frame");
+            if (it.getAction().equals("pause")) {
+                Utils.stopVibrator(this);
+                Utils.notification = false;
+            }
+        }*/
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

@@ -145,16 +145,16 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
         }else {
             switch_btn.setChecked(false);
         }
+        final AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         switch_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
                 Intent intent = new Intent(context, AlarmReceiver.class);
                 intent.setAction("alarm");
-                PendingIntent sender = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent sender = PendingIntent.getBroadcast(context,groupPosition,intent,PendingIntent.FLAG_CANCEL_CURRENT);
                 if(isChecked){
                     //注册闹铃
-                    Log.e("resg", "yes" + calendar.getTimeInMillis());
+//                    Log.e("resg", "yes" + calendar.getTimeInMillis());
                     //如果设置时间小于当前时间,则延后一天
                     if (calendar.getTimeInMillis() - System.currentTimeMillis() < 0)
                     {

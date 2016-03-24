@@ -1,6 +1,7 @@
 package com.example.q97531x.myapplication;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -51,7 +52,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void onSuccess() {
                         Toast.makeText(RegisterActivity.this,"添加数据成功，返回objectId为：" + person.getObjectId(),Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(RegisterActivity.this,AvatarActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override

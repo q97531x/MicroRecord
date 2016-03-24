@@ -1,8 +1,10 @@
 package fragment;
 
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import net.tsz.afinal.FinalDb;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import fragment.Adapter.AlarmAdapter;
 import model.AlarmClock;
@@ -91,11 +94,11 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
                 timePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        Log.e("dismiss","dismiss");
 //                        adapter = new AlarmAdapter(getActivity(),db,alarmRate);
                         AlarmFragment amFragment = new AlarmFragment();
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, amFragment).commit();
 //                        adapter.notifyDataSetChanged();
+
                     }
                 });
                 break;

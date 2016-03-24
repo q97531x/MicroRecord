@@ -35,6 +35,7 @@
     <string name="icon_detail">&#xe605;</string>
     <!--加-->
     <string name="icon_add">&#xe606;</string>
-
+    <!-- 相机-->
+    <string name="icon_camera">&#xe607;</string>
     <string name="title_activity_select_type">SelectTypeActivity</string>
 </resources>

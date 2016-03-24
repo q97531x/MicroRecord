@@ -16,4 +16,5 @@
     <color name="lightdark">#323232</color>
     <color name="lightgrey">#FF999999</color>
     <color name="blue">#FF0068cc</color>
+    <color name="desc">#FFCCCCCC</color>
 </resources>
