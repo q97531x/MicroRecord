@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,13 @@ import net.tsz.afinal.FinalDb;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.HttpHandler;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -142,7 +150,7 @@ public class MoreFragment extends Fragment {
                                 if(httpversion > version){
                                     //Log.e("true","true");
 
-                                    URL versionurl=new URL(apkurl);
+                                   /* URL versionurl=new URL(apkurl);
                                     HttpURLConnection con=(HttpURLConnection)versionurl.openConnection();
                                     InputStream is = con.getInputStream();
                                     File file = new File("/sdcard/update/" + fileName);
@@ -180,7 +188,7 @@ public class MoreFragment extends Fragment {
                                     intent.setAction(android.content.Intent.ACTION_VIEW);
                                     intent.setDataAndType(Uri.fromFile(file),
                                             "application/vnd.android.package-archive");
-                                    startActivity(intent);
+                                    startActivity(intent);*/
                                 }else{
                                     Looper.prepare();
                                     Toast.makeText(getActivity(),"当前已是最新版本",Toast.LENGTH_LONG).show();
@@ -232,5 +240,53 @@ public class MoreFragment extends Fragment {
 
     public void setTitle(Toolbar toolbar){
         toolbar.setTitle("更多");
+    }
+    //弹出dialog下载
+    public void download(){
+        final Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpClient client = new DefaultHttpClient();
+                HttpGet get = new HttpGet(apkurl);
+                HttpResponse response;
+                try {
+
+                    response = client.execute(get);
+                    HttpEntity entity = response.getEntity();
+                    int length = (int) entity.getContentLength();   //获取文件大小
+                    pBar.setMax(length);                            //设置进度条的总长度
+                    InputStream is = entity.getContent();
+                    FileOutputStream fileOutputStream = null;
+                    if (is != null) {
+                        File file = new File(
+                                Environment.getExternalStorageDirectory(),
+                                "Test.apk");
+                        fileOutputStream = new FileOutputStream(file);
+                        byte[] buf = new byte[10];   //这个是缓冲区，即一次读取10个比特，我弄的小了点，因为在本地，所以数值太大一 下就下载完了，看不出progressbar的效果。
+                        int ch = -1;
+                        int process = 0;
+                        while ((ch = is.read(buf)) != -1) {
+                            fileOutputStream.write(buf, 0, ch);
+                            process += ch;
+                            pBar.setProgress(process);       //这里就是关键的实时更新进度了！
+                        }
+
+                    }
+                    fileOutputStream.flush();
+                    if (fileOutputStream != null) {
+                        fileOutputStream.close();
+                    }
+//                    down();
+                } catch (ClientProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }.start();
+    }
+        });
+
     }
 }

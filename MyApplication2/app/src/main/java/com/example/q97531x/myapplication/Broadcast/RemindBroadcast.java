@@ -3,8 +3,10 @@ package com.example.q97531x.myapplication.Broadcast;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
@@ -20,6 +22,7 @@ public class RemindBroadcast extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.e("getIntent","intent");
+        final MediaPlayer mMediaPlayer;
         String action = intent.getAction();
         if(action.equals("Vibrator")){
 //            Utils.toast("振动");
@@ -28,7 +31,7 @@ public class RemindBroadcast extends BroadcastReceiver{
             vibrator.vibrate(pattern, 4);           //重复两次上面的pattern 如果只想震动一次，index设为-1
             Utils.toast(context,"您预算超支啦,该好好规划一下支出啦");
         }else if(action.equals("Ring")){
-            final MediaPlayer mMediaPlayer = MediaPlayer.create(context,RingtoneManager.getActualDefaultRingtoneUri(context,RingtoneManager.TYPE_RINGTONE));
+            /*final MediaPlayer mMediaPlayer = MediaPlayer.create(context,RingtoneManager.getActualDefaultRingtoneUri(context,RingtoneManager.TYPE_RINGTONE));
             mMediaPlayer.setLooping(true);
             try {
                 mMediaPlayer.prepare();
@@ -43,7 +46,26 @@ public class RemindBroadcast extends BroadcastReceiver{
                     //execute the task
                     mMediaPlayer.stop();
                 }
-            }, 3000);
+            }, 3000);*/
+            try {
+                Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+                mMediaPlayer = new MediaPlayer();
+                mMediaPlayer.setDataSource(context, alert);
+//final AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
+                mMediaPlayer.setLooping(true);
+                mMediaPlayer.prepare();
+                mMediaPlayer.start();
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        //execute the task
+                        mMediaPlayer.stop();
+                    }
+                }, 3000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             Utils.toast(context,"您预算超支啦,该好好规划一下支出啦");
         }else {
             sendSms(intent.getStringExtra("phoneNum"),intent.getStringExtra("phoneName"));

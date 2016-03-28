@@ -41,7 +41,7 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        camera = (ImageView)findViewById(R.id.camera);
+//        camera = (ImageView)findViewById(R.id.camera);
         nick = (TextView)findViewById(R.id.nick);
         sex = (TextView)findViewById(R.id.sex);
         complete = (TextView)findViewById(R.id.complete);
@@ -52,11 +52,11 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.camera:
+           /* case R.id.camera:
                 //跳转选择图片
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_REQUEST_PHOTO);
-                break;
+                break;*/
             case R.id.complete:
 
                 break;

@@ -13,18 +13,17 @@ import com.example.q97531x.myapplication.R;
  * Created by Administrator on 2015/7/27.
  */
 public class GuideFragment2 extends Fragment {
-    private Context ctx;
+   // private Context ctx;
    /* public GuideFragment1(){
         super();
     }*/
-    public GuideFragment2(Context ctx){
+    public GuideFragment2(){
         super();
-        this.ctx = ctx;
     }
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        View view =  View.inflate(ctx, R.layout.fragment_guide2,null);
+        View view =  View.inflate(getActivity(), R.layout.fragment_guide2,null);
         return view;
     }
 }

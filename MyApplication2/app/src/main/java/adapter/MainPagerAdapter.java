@@ -25,13 +25,13 @@ public class MainPagerAdapter extends FragmentPagerAdapter{
         Fragment mFragment = null;
         switch (position){
             case 0:
-                mFragment = new GuideFragment1(ctx);
+                mFragment = new GuideFragment1();
                 break;
             case 1:
-                mFragment = new GuideFragment2(ctx);
+                mFragment = new GuideFragment2();
                 break;
             case 2:
-                mFragment = new GuideFragment3(ctx);
+                mFragment = new GuideFragment3();
                 break;
         }
         return mFragment;
