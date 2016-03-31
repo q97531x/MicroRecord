@@ -1,4 +1,5 @@
 package fragment;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -49,21 +50,23 @@ import model.Outcome;
 /**
  * Created by Administrator on 2015/7/28.
  */
-public class DetailFragment extends Fragment implements View.OnClickListener{
+public class DetailFragment extends Fragment implements View.OnClickListener {
     //Context ctx;
 
-    int year,month,day,flag = 0;
-    LinearLayout outcomeLayout,incomeLayout;
-    ImageView detailOutcome,detailIncome;
-    private TextView outcomeText,incomeText,write;
+    int year, month, day, flag = 0;
+    LinearLayout outcomeLayout, incomeLayout;
+    ImageView detailOutcome, detailIncome;
+    private TextView outcomeText, incomeText, write;
     private static final int UPDATE = 1234;
+    private int RequestWrite = 9999;
     SlideListView lv;
     FinalDb db;
     int icontype = 0;
-//    Toolbar toolbar;
+    //    Toolbar toolbar;
     private String type = "outcome";
     private String date;
-    public DetailFragment(){
+
+    public DetailFragment() {
         super();
     }
 
@@ -83,16 +86,16 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //View view = View.inflate(ctx,R.layout.fragment_detail,null);
         Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "iconfont.ttf");
-        View view = inflater.inflate(R.layout.fragment_detail,container,false);
+        View view = inflater.inflate(R.layout.fragment_detail, container, false);
         db = FinalDb.create(getActivity());
-        lv = (SlideListView)view.findViewById(R.id.list);
-        outcomeLayout = (LinearLayout)view.findViewById(R.id.outcomeLayout);
-        incomeLayout = (LinearLayout)view.findViewById(R.id.incomeLayout);
-        detailIncome = (ImageView)view.findViewById(R.id.detailIncomeImg);
-        detailOutcome = (ImageView)view.findViewById(R.id.detailOutcomeImg);
-        outcomeText = (TextView)view.findViewById(R.id.outcomeText);
-        incomeText = (TextView)view.findViewById(R.id.incomeText);
-        write = (TextView)view.findViewById(R.id.write);
+        lv = (SlideListView) view.findViewById(R.id.list);
+        outcomeLayout = (LinearLayout) view.findViewById(R.id.outcomeLayout);
+        incomeLayout = (LinearLayout) view.findViewById(R.id.incomeLayout);
+        detailIncome = (ImageView) view.findViewById(R.id.detailIncomeImg);
+        detailOutcome = (ImageView) view.findViewById(R.id.detailOutcomeImg);
+        outcomeText = (TextView) view.findViewById(R.id.outcomeText);
+        incomeText = (TextView) view.findViewById(R.id.incomeText);
+        write = (TextView) view.findViewById(R.id.write);
         //设置字体
         write.setTypeface(iconfont);
         /*AssetManager mgr = getActivity().getAssets();//得到AssetManager
@@ -106,7 +109,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 //        date = year + "-" + (month + 1) + "-" + day;
-        date = year + "-" + (month+1);
+        date = year + "-" + (month + 1);
         DataBase(date);
 
         outcomeLayout.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +119,8 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
 //                Toast.makeText(getActivity(),"支出"+flag,Toast.LENGTH_LONG).show();
                 detailIncome.setImageResource(R.drawable.icons_income02);
                 detailOutcome.setImageResource(R.drawable.icons_outcome1);
+                outcomeLayout.setBackgroundResource(R.color.white);
+                incomeLayout.setBackgroundResource(R.color.orange);
                 type = "outcome";
                 DataBase(date);
             }
@@ -127,6 +132,8 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
 //                Toast.makeText(getActivity(),"收入"+flag,Toast.LENGTH_LONG).show();
                 detailIncome.setImageResource(R.drawable.icons_income1);
                 detailOutcome.setImageResource(R.drawable.icons_outcome02);
+                outcomeLayout.setBackgroundResource(R.color.orange);
+                incomeLayout.setBackgroundResource(R.color.white);
                 type = "income";
                 DataBase(date);
             }
@@ -137,11 +144,11 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.write:
-                Intent intent = new Intent(getActivity(),WriteActivity.class);
-                intent.putExtra("type",type);
-                intent.putExtra("aim","create");
+                Intent intent = new Intent(getActivity(), WriteActivity.class);
+                intent.putExtra("type", type);
+                intent.putExtra("aim", "create");
                 startActivity(intent);
                 break;
         }
@@ -150,24 +157,27 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+        DataBase(date);
 //        DataBase(toolbar);
     }
-    public void setTitle(Toolbar toolbar){
+
+    public void setTitle(Toolbar toolbar) {
         toolbar.setTitle("账单");
     }
-    public void DataBase(final String date){
-        if(flag == 0){
+
+    public void DataBase(final String date) {
+        if (flag == 0) {
             final List<Outcome> outcomeList = db.findAllByWhere(Outcome.class, " outcomeMonth=\"" + date + "\"");
             final ArrayList<Float> listAmount = new ArrayList<>();
             final ArrayList<String> listType = new ArrayList<>();
             final ArrayList<String> listTime = new ArrayList<>();
 
-            for(int i = 0;i<outcomeList.size();i++){
+            for (int i = 0; i < outcomeList.size(); i++) {
                 listAmount.add(outcomeList.get(i).getOutcomeAmount());
                 listType.add(outcomeList.get(i).getOutcomeType());
                 listTime.add(outcomeList.get(i).getOutcomeTime());
             }
-            final DetailAdapter adapter = new DetailAdapter(getActivity(),listAmount,listTime,listType);
+            final DetailAdapter adapter = new DetailAdapter(getActivity(), listAmount, listTime, listType);
             /*Log.e("outcome",outcomeList.toString());
             List<Map<String ,Object>> listItems = new ArrayList<Map<String,Object>>();
             for(int i = 0;i<outcomeList.size();i++){
@@ -201,34 +211,34 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
                 @Override
                 public void removeItem(SlideListView.RemoveDirection direction, int position) {
                     if (direction == SlideListView.RemoveDirection.RIGHT) {
-                        Log.e("id", outcomeList.get(position).getOutcomeId()+"");
+                        Log.e("id", outcomeList.get(position).getOutcomeId() + "");
                         db.deleteById(Outcome.class, outcomeList.get(position).getOutcomeId());
                         DataBase(date);
 
-                    }else{
-                        Intent intent = new Intent(getActivity(),WriteActivity.class);
-                        intent.putExtra("id",outcomeList.get(position).getOutcomeId()+"");
-                        intent.putExtra("aim","update");
-                        intent.putExtra("type",type);
+                    } else {
+                        Intent intent = new Intent(getActivity(), WriteActivity.class);
+                        intent.putExtra("id", outcomeList.get(position).getOutcomeId() + "");
+                        intent.putExtra("aim", "update");
+                        intent.putExtra("type", type);
                         startActivityForResult(intent, UPDATE);
                     }
                 }
             });
-        }else if(flag == 1){
-            List<Income> incomeList = db.findAllByWhere(Income.class, " incomeTime=\"" +date  + "\"");
-            Log.e("income",incomeList.toString());
-            List<Map<String ,Object>> listItems = new ArrayList<Map<String,Object>>();
-            for(int i = 0;i<incomeList.size();i++){
-                Map<String,Object> listItem = new HashMap<String,Object>();
+        } else if (flag == 1) {
+            List<Income> incomeList = db.findAllByWhere(Income.class, " incomeTime=\"" + date + "\"");
+            Log.e("income", incomeList.toString());
+            List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
+            for (int i = 0; i < incomeList.size(); i++) {
+                Map<String, Object> listItem = new HashMap<String, Object>();
                 listItem.put("Amount", incomeList.get(i).getIncomeAmount());
                 listItem.put("Type", incomeList.get(i).getIncomeType());
                 listItem.put("Time", incomeList.get(i).getIncomeHour());
-                listItem.put("id",incomeList.get(i).getUserId());
+                listItem.put("id", incomeList.get(i).getUserId());
                 listItems.add(listItem);
             }
-            SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), listItems, R.layout.simple_item, new String[]{"Amount","Type","Time","id"}, new int[]{R.id.detailAmount,R.id.detailType,R.id.detailTime});
+            SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(), listItems, R.layout.simple_item, new String[]{"Amount", "Type", "Time", "id"}, new int[]{R.id.detailAmount, R.id.detailType, R.id.detailTime});
             lv.setAdapter(simpleAdapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                         long arg3) {
@@ -238,23 +248,24 @@ public class DetailFragment extends Fragment implements View.OnClickListener{
                     Intent intent = new Intent(getActivity(), WriteActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("id", id);
-                    bundle.putInt("flag",flag);
+                    bundle.putInt("flag", flag);
                     intent.putExtra("bd", bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent, RequestWrite);
                 }
             });
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_date:
-                Log.e("click","menu");
-                if(icontype == 0) {
+                Log.e("click", "menu");
+                if (icontype == 0) {
                     Log.e("click", "menu1");
                     item.setIcon(R.mipmap.iconfont_zhou);
                     icontype = 1;
-                }else{
+                } else {
                     item.setIcon(R.mipmap.iconfont_yue);
                     icontype = 0;
                 }

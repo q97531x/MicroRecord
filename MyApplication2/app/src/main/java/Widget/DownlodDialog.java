@@ -23,10 +23,8 @@ public class DownlodDialog extends Dialog{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inflater = LayoutInflater.from(context);
-        initView();
+//        initView();
     }
 
-    private void initView() {
-        View view = inflater.inflate()
-    }
+
 }

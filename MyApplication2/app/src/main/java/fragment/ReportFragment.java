@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -50,6 +51,7 @@ import model.Outcome;
 public class ReportFragment extends Fragment {
     FinalDb db;
     Toolbar toolbar;
+    private ImageView detailIncomeImg,detailOutcomeImg;
     LinearLayout reOutcomeBtn,reIncomeBtn;
     TextView reportDate;
     private PieChart mChart;
@@ -82,7 +84,8 @@ public class ReportFragment extends Fragment {
         reportDate = (TextView)view.findViewById(R.id.reportDate);
         reOutcomeBtn = (LinearLayout)view.findViewById(R.id.reOutcomeBtn);
         reIncomeBtn = (LinearLayout)view.findViewById(R.id.reIncomeBtn);
-
+        detailIncomeImg = (ImageView)view.findViewById(R.id.detailIncomeImg);
+        detailOutcomeImg = (ImageView)view.findViewById(R.id.detailOutcomeImg);
 //        reList = (ListView)view.findViewById(R.id.reList);
         mChart = (PieChart) view.findViewById(R.id.pieChart);
         mChart.setHoleRadius(60f);
@@ -121,8 +124,10 @@ public class ReportFragment extends Fragment {
             public void onClick(View v) {
                 flag = true;
                 //mChart.invalidate();
-                reOutcomeBtn.setBackgroundResource(R.drawable.reportout_bg2);
-                reIncomeBtn.setBackgroundResource(R.drawable.reportout_bg1);
+                detailIncomeImg.setImageResource(R.drawable.icons_income02);
+                detailOutcomeImg.setImageResource(R.drawable.icons_outcome1);
+                reOutcomeBtn.setBackgroundResource(R.color.white);
+                reIncomeBtn.setBackgroundResource(R.color.orange);
                 Log.e("flag",""+flag);
                 invalidOutcome();
             }
@@ -131,8 +136,10 @@ public class ReportFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 flag = false;
-                reOutcomeBtn.setBackgroundResource(R.drawable.reportout_bg1);
-                reIncomeBtn.setBackgroundResource(R.drawable.reportout_bg2);
+                detailIncomeImg.setImageResource(R.drawable.icons_outcome1);
+                detailOutcomeImg.setImageResource(R.drawable.icons_income02);
+                reOutcomeBtn.setBackgroundResource(R.color.orange);
+                reIncomeBtn.setBackgroundResource(R.color.white);
                 Log.v("tt", "click" + flag);
                 //mChart.invalidate();
                 Log.e("flag",""+flag);

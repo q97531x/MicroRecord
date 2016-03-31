@@ -150,7 +150,7 @@ public class MoreFragment extends Fragment {
                                 if(httpversion > version){
                                     //Log.e("true","true");
 
-                                   /* URL versionurl=new URL(apkurl);
+                                    URL versionurl=new URL(apkurl);
                                     HttpURLConnection con=(HttpURLConnection)versionurl.openConnection();
                                     InputStream is = con.getInputStream();
                                     File file = new File("/sdcard/update/" + fileName);
@@ -188,7 +188,7 @@ public class MoreFragment extends Fragment {
                                     intent.setAction(android.content.Intent.ACTION_VIEW);
                                     intent.setDataAndType(Uri.fromFile(file),
                                             "application/vnd.android.package-archive");
-                                    startActivity(intent);*/
+                                    startActivity(intent);
                                 }else{
                                     Looper.prepare();
                                     Toast.makeText(getActivity(),"当前已是最新版本",Toast.LENGTH_LONG).show();
@@ -242,7 +242,7 @@ public class MoreFragment extends Fragment {
         toolbar.setTitle("更多");
     }
     //弹出dialog下载
-    public void download(){
+    /*public void download(){
         final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -288,5 +288,5 @@ public class MoreFragment extends Fragment {
     }
         });
 
-    }
+    }*/
 }

@@ -45,22 +45,23 @@ import util.Utils;
 /**
  * Created by 渡渡鸟 on 2016/1/4.
  */
-public class WriteActivity extends BaseActivity implements View.OnClickListener{
+public class WriteActivity extends BaseActivity implements View.OnClickListener {
     //控件
-    private TextView title,confirm;
+    private TextView title, confirm;
     private ImageView more;
-    private EditText editAmount,editDetail,typeEdit;
+    private EditText editAmount, editDetail, typeEdit;
     //参数
     private Typeface iconfont;
     ArrayList<View> views;
-    private int year,month,day,weekofMonth,dayofWeek;
+    private int year, month, day, weekofMonth, dayofWeek;
     private Calendar calendar;
     private boolean isComplete = false;
     private static final int GETTYPE = 23333;
-    private Intent intent;
-    private String type,aim,id;
+    private Intent intent, it;
+    private String type, aim, id;
     private FinalDb db;
     private DatePickerDialog.OnDateSetListener onDateSetListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +75,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
         dayofWeek = calendar.get(Calendar.DAY_OF_WEEK);
         weekofMonth = calendar.get(Calendar.WEEK_OF_MONTH);
         intent = getIntent();
-        if(intent.getStringExtra("id")!=null){
+        if (intent.getStringExtra("id") != null) {
             id = intent.getStringExtra("id");
         }
         type = intent.getStringExtra("type");
@@ -89,11 +90,12 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
             }
         };
     }
+
     //返回结果
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == Activity.RESULT_OK){
-            if(requestCode == GETTYPE){
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GETTYPE) {
                 typeEdit.setBackgroundResource(R.drawable.rect_orange_shape);
                 typeEdit.setText(data.getStringExtra("selectType"));
             }
@@ -102,9 +104,9 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.confirm:
-                if(aim.equals("create")) {
+                if (aim.equals("create")) {
                     //保存数据
                     if (type.equals("outcome")) {
                         Outcome outcome = new Outcome();
@@ -133,6 +135,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                             Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
                         }
                         isOverSpend(db);
+                        jumpToFrame();
                     } else {
                         Income income = new Income();
                         income.setIncomeTime(title.getText().toString());
@@ -156,8 +159,9 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                         } else {
                             Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
                         }
+                        jumpToFrame();
                     }
-                }else{
+                } else {
                     if (type.equals("outcome")) {
                         Outcome outcome = new Outcome();
                         outcome.setOutcomeTime(title.getText().toString());
@@ -170,13 +174,13 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                                 outcome.setOutcomeType(typeEdit.getText().toString());
                                 if (!editDetail.getText().toString().equals("")) {
                                     outcome.setOutcomeNote(editDetail.getText().toString());
-                                    db.update(outcome," outcomeId=\"" +id  + "\"");
-                                    Log.e("update","update"+id);
+                                    db.update(outcome, " outcomeId=\"" + id + "\"");
+                                    Log.e("update", "update" + id);
                                     isComplete = true;
                                 } else {
                                     outcome.setOutcomeNote("");
-                                    db.update(outcome," outcomeId=\"" +id  + "\"");
-                                    Log.e("update", "update"+id);
+                                    db.update(outcome, " outcomeId=\"" + id + "\"");
+                                    Log.e("update", "update" + id);
                                     isComplete = true;
                                 }
                             } else {
@@ -186,7 +190,8 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                         } else {
                             Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
                         }
-
+                        isOverSpend(db);
+                        jumpToFrame();
                     } else {
                         Income income = new Income();
                         income.setIncomeTime(title.getText().toString());
@@ -210,9 +215,10 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                         } else {
                             Toast.makeText(this, "输入金额", Toast.LENGTH_SHORT).show();
                         }
+                        jumpToFrame();
                     }
                 }
-                if(isComplete) {
+                if (isComplete) {
                     finish();
                 }
                 break;
@@ -223,33 +229,35 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                 new DatePickerDialog(WriteActivity.this, onDateSetListener, year, month, day).show();
                 break;
             case R.id.more:
-                Intent intent = new Intent(this,SelectTypeActivity.class);
-                intent.putExtra("type",type);
-                startActivityForResult(intent,GETTYPE);
+                Intent intent = new Intent(this, SelectTypeActivity.class);
+                intent.putExtra("type", type);
+                startActivityForResult(intent, GETTYPE);
                 break;
             default:
                 break;
         }
     }
-    public void initToolbar(){
-        ImageView back = (ImageView)findViewById(R.id.back);
+
+    public void initToolbar() {
+        ImageView back = (ImageView) findViewById(R.id.back);
         back.setOnClickListener(this);
-        RelativeLayout rl_date = (RelativeLayout)findViewById(R.id.rl_date);
+        RelativeLayout rl_date = (RelativeLayout) findViewById(R.id.rl_date);
         rl_date.setOnClickListener(this);
-        TextView selectTime = (TextView)findViewById(R.id.icon_time_select);
+        TextView selectTime = (TextView) findViewById(R.id.icon_time_select);
         selectTime.setTypeface(iconfont);
-        title = (TextView)findViewById(R.id.title);
+        title = (TextView) findViewById(R.id.title);
         title.setText(year + "-" + (month + 1) + "-" + day);
         //确定
 
     }
-    public void initView(){
-        more = (ImageView)findViewById(R.id.more);
-        confirm = (TextView)findViewById(R.id.confirm);
-        editAmount = (EditText)findViewById(R.id.editAmount);
-        editDetail = (EditText)findViewById(R.id.editDetail);
-        typeEdit = (EditText)findViewById(R.id.type);
-        if(id!=null) {
+
+    public void initView() {
+        more = (ImageView) findViewById(R.id.more);
+        confirm = (TextView) findViewById(R.id.confirm);
+        editAmount = (EditText) findViewById(R.id.editAmount);
+        editDetail = (EditText) findViewById(R.id.editDetail);
+        typeEdit = (EditText) findViewById(R.id.type);
+        if (id != null) {
             Outcome outcome = db.findById(id, Outcome.class);
             if (aim.equals("update")) {
                 editAmount.setText(outcome.getOutcomeAmount() + "");
@@ -261,17 +269,22 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
         more.setOnClickListener(this);
         confirm.setOnClickListener(this);
     }
+    //跳转
+    public void jumpToFrame(){
+        it = new Intent();
+        setResult(Activity.RESULT_OK, intent);
+    }
     //判断是否超支
-    public void isOverSpend(FinalDb db){
+    public void isOverSpend(FinalDb db) {
         //获得设置百分比
-        float budget = 0,outcome = 0;
+        float budget = 0, outcome = 0;
         List<Remind> reminds = db.findAll(Remind.class);
-        if(reminds.size()>0){
-            float percent = reminds.get(0).getPercent()/100;
+        if (reminds.size() > 0) {
+            float percent = reminds.get(0).getPercent() / 100;
             float py;
             List<Budget> budgets = db.findAll(Budget.class);
             List<Outcome> outcomes = db.findAll(Outcome.class);
-            if(budgets.size()>0&&outcomes.size()>0) {
+            if (budgets.size() > 0 && outcomes.size() > 0) {
                 for (int i = 0; i < budgets.size(); i++) {
                     budget = budget + budgets.get(i).getBudgetAccount();
                 }
@@ -284,7 +297,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener{
                     Intent intent = new Intent(this, RemindBroadcast.class);
                     switch (reminds.get(0).getStyle()) {
                         case 0:
-                            Log.e("vb","vb");
+                            Log.e("vb", "vb");
                             intent.setAction("Vibrator");
                             sendBroadcast(intent);
 
