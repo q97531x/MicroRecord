@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -60,6 +61,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     private static final int UPDATE = 1234;
     private int RequestWrite = 9999;
     SlideListView lv;
+    private int topPosition = 0;
     FinalDb db;
     int icontype = 0;
     //    Toolbar toolbar;
@@ -111,7 +113,27 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
 //        date = year + "-" + (month + 1) + "-" + day;
         date = year + "-" + (month + 1);
         DataBase(date);
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                Log.e("position", "firstVisible:" + firstVisibleItem + "top:" + topPosition);
+                if (firstVisibleItem > topPosition) {
+                    //隐藏按钮
+                    write.setVisibility(View.GONE);
+
+                } else if (firstVisibleItem < topPosition) {
+                    write.setVisibility(View.VISIBLE);
+
+                }
+                topPosition = firstVisibleItem;
+
+            }
+        });
         outcomeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -2,6 +2,7 @@ package Widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -28,7 +29,7 @@ public class SlideListView extends ListView{
     private int downY;
     private int slidePosition;
     private View itemView;
-    private boolean isSlide = false;
+    private boolean isSlide = false,isScroll = false;
     //private int velocityX;
     /**
      * 速度追踪对象
@@ -63,6 +64,7 @@ public class SlideListView extends ListView{
         //初始化滑动类
         scroller = new Scroller(context);
         minTouchSloop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+        Log.e("minTouchSloop",minTouchSloop+"");
     }
     //设置滑动删除的回调接口
     public void SetRemoveListener(RemoveListener removeListener){
@@ -148,21 +150,23 @@ public class SlideListView extends ListView{
             itemView.scrollTo(scroller.getCurrX(), scroller.getCurrY());
 
             postInvalidate();
-
+            Log.e("isScroll",isScroll+"");
             // 滚动动画结束的时候调用回调接口
-            if (scroller.isFinished()) {
+            if (scroller.isFinished()&&!isScroll) {
                 if (removeListener == null) {
                     throw new NullPointerException("RemoveListener is null, we should called setRemoveListener()");
                 }
                 //回到原来位置
                 //itemView.scrollTo(0, 0);
                 removeListener.removeItem(removeDirection, slidePosition);
+                isScroll = false;
             }
         }
     }
 
     public void scrollRight(){
         removeDirection = RemoveDirection.LEFT;
+        isScroll = false;
         //偏移量
         final int delta = (ScreenWidth + itemView.getScrollX());
         scroller.startScroll(itemView.getScrollX(),0,-delta,0,Math.abs(delta));
@@ -170,6 +174,7 @@ public class SlideListView extends ListView{
     }
     public void scrollLeft(){
         removeDirection = RemoveDirection.RIGHT;
+        isScroll = false;
         //偏移量
         final int delta = (ScreenWidth - itemView.getScrollX());
         scroller.startScroll(itemView.getScrollX(),0,delta,0,Math.abs(delta));
@@ -186,7 +191,11 @@ public class SlideListView extends ListView{
             scrollRight();
         } else {
             // 滚回到原始位置,为了偷下懒这里是直接调用scrollTo滚动
-            itemView.scrollTo(0, 0);
+//            itemView.scrollTo(0, 0);
+            Log.e("scoll", "1" + itemView.getScrollX());
+            isScroll = true;
+            scroller.startScroll(itemView.getScrollX(), 0, -itemView.getScrollX(), 0);
+            postInvalidate();
         }
 
     }
