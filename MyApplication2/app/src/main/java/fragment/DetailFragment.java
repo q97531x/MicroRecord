@@ -1,5 +1,6 @@
 package fragment;
 
+import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -57,7 +58,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     int year, month, day, flag = 0;
     LinearLayout outcomeLayout, incomeLayout;
     ImageView detailOutcome, detailIncome;
-    private TextView outcomeText, incomeText, write;
+    private TextView write;
     private static final int UPDATE = 1234;
     private int RequestWrite = 9999;
     SlideListView lv;
@@ -67,6 +68,8 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     //    Toolbar toolbar;
     private String type = "outcome";
     private String date;
+    private boolean slideUp = false;
+    private boolean scrollStop = false;
 
     public DetailFragment() {
         super();
@@ -95,8 +98,6 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         incomeLayout = (LinearLayout) view.findViewById(R.id.incomeLayout);
         detailIncome = (ImageView) view.findViewById(R.id.detailIncomeImg);
         detailOutcome = (ImageView) view.findViewById(R.id.detailOutcomeImg);
-        outcomeText = (TextView) view.findViewById(R.id.outcomeText);
-        incomeText = (TextView) view.findViewById(R.id.incomeText);
         write = (TextView) view.findViewById(R.id.write);
         //设置字体
         write.setTypeface(iconfont);
@@ -116,22 +117,30 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+                if(scrollState == SCROLL_STATE_FLING){
+                    scrollStop = true;
+                }
             }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 Log.e("position", "firstVisible:" + firstVisibleItem + "top:" + topPosition);
-                if (firstVisibleItem > topPosition) {
+                if (firstVisibleItem > topPosition&&scrollStop) {
                     //隐藏按钮
-                    write.setVisibility(View.GONE);
-
-                } else if (firstVisibleItem < topPosition) {
-                    write.setVisibility(View.VISIBLE);
-
+//                    write.setVisibility(View.GONE);
+                    //调用动画
+                    if(!slideUp) {
+                        Animation(write, 0);
+                    }
+                    scrollStop = false;
+                } else if (firstVisibleItem < topPosition&&scrollStop) {
+//                    write.setVisibility(View.VISIBLE);
+                    if(slideUp) {
+                        Animation(write, 1);
+                    }
+                    scrollStop = false;
                 }
                 topPosition = firstVisibleItem;
-
             }
         });
         outcomeLayout.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +171,21 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         });
 
         return view;
+    }
+
+    /**
+     * 上下滑动画
+     * @param view  控件
+     * @param type  0是向下滑,1是向上滑
+     */
+    public void Animation(View view,int type){
+        if(type == 0) {
+            ObjectAnimator.ofFloat(view, "translationY", view.getTranslationY(), view.getTranslationY() + 250).setDuration(400).start();
+            slideUp = true;
+        }else {
+            ObjectAnimator.ofFloat(view, "translationY", view.getTranslationY(), view.getTranslationY() - 250).setDuration(400).start();
+            slideUp = false;
+        }
     }
 
     @Override
