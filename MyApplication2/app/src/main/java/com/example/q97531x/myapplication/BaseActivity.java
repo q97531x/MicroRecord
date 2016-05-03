@@ -38,6 +38,5 @@ public class BaseActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CheckPasswordActivity.class);
             startActivity(intent);
         }*/
-
     }
 }

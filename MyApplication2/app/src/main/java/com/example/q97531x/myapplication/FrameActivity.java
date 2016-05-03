@@ -113,7 +113,9 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.ll_login:
                 if (App.getUser()==0) {
-                    Intent intent = new Intent(this, LoginActivity.class);
+                    /*Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);*/
+                    Intent intent = new Intent(this,PickPhotoActivity.class);
                     startActivity(intent);
                 }
                 break;

@@ -48,6 +48,7 @@ public class TypeSelectAdapter extends BaseAdapter{
             convertView = View.inflate(context, R.layout.type_item,null);
             holder.typeItem = (TextView)convertView.findViewById(R.id.type);
             holder.type_icon = (ImageView)convertView.findViewById(R.id.type_icon);
+            convertView.setTag(holder);
         }else {
             holder = (ViewHolder)convertView.getTag();
         }
