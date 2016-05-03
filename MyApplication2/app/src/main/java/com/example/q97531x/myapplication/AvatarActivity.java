@@ -2,6 +2,7 @@ package com.example.q97531x.myapplication;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 
 /**
  * Created by XmacZone on 16/3/24.
@@ -41,7 +46,7 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-//        camera = (ImageView)findViewById(R.id.camera);
+        camera = (ImageView)findViewById(R.id.camera);
         nick = (TextView)findViewById(R.id.nick);
         sex = (TextView)findViewById(R.id.sex);
         complete = (TextView)findViewById(R.id.complete);
@@ -49,14 +54,35 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
         camera.setOnClickListener(this);
     }
 
+    /**
+     * Dispatch incoming result to the correct fragment.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RESULT_REQUEST_PHOTO){
+            if(resultCode == RESULT_OK){
+                ArrayList<Uri> uri = data.getParcelableArrayListExtra("data");
+                Glide.with(this).load(uri.get(0)).into(camera);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-           /* case R.id.camera:
+            case R.id.camera:
                 //跳转选择图片
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_REQUEST_PHOTO);
-                break;*/
+                /*Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_REQUEST_PHOTO);*/
+                Intent intent = new Intent(this,PickPhotoActivity.class);
+                startActivityForResult(intent,RESULT_REQUEST_PHOTO);
+                break;
             case R.id.complete:
 
                 break;

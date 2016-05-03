@@ -7,7 +7,8 @@
             android:id="@+id/img1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             />
 
 
@@ -18,12 +19,11 @@
                 android:background="#66666666"
                 android:visibility="gone"
                 />
-            <!--<CheckBox
+            <CheckBox
                 android:id="@+id/check"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
-                android:button="@drawable/pick_photo_checkbox"
-                android:focusable="false"/>-->
+                android:focusable="false"/>
 </RelativeLayout>
