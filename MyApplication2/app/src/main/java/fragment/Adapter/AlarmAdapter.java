@@ -178,7 +178,11 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return null;
+        if(convertView == null) {
+            convertView = View.inflate(context, R.layout.item_alarm_child, parent);
+        }
+
+        return convertView;
     }
 
     @Override

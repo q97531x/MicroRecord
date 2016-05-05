@@ -23,11 +23,10 @@ import java.util.ArrayList;
  * Created by q97531x on 2016/5/2.
  */
 public class GridViewBaseAdapter extends BaseAdapter {
-    Uri mUri = Uri.parse("content://media/external/images/media");
     int itemWidth, sWidthPix;
     private Context context;
     private ArrayList<FileInfo> images = new ArrayList<>();
-    private ArrayList<Uri> uri = new ArrayList<>();
+    private ArrayList<FileInfo> selectImage = new ArrayList<>();
 
     public GridViewBaseAdapter(Context context, ArrayList<FileInfo> images) {
         this.context = context;
@@ -53,9 +52,9 @@ public class GridViewBaseAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-        final Uri imageUri = Uri.withAppendedPath(mUri, "" + images.get(position).getId());
+//        final Uri imageUri = Uri.withAppendedPath(mUri, "" + images.get(position).getId());
         if (convertView == null) {
             holder = new ViewHolder();
 //            convertView = View.inflate(context, R.layout.item_pick_photo, null);
@@ -78,20 +77,20 @@ public class GridViewBaseAdapter extends BaseAdapter {
 //        Log.e("path",images.get(position).getFilePath());
         //加载图片
 //        Picasso.with(context).load(Uri.withAppendedPath(mUri, "" + images.get(position).getId())).into(holder.img1);
-        Glide.with(context).load(imageUri).into(holder.img1);
+        Glide.with(context).load(images.get(position).getUri()).into(holder.img1);
         holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     holder.check.setChecked(isChecked);
                     holder.mark.setVisibility(View.VISIBLE);
-                    uri.add(imageUri);
+                    selectImage.add(images.get(position));
                 } else {
                     holder.check.setChecked(isChecked);
                     holder.mark.setVisibility(View.GONE);
-                    for(int i = 0;i<uri.size();i++){
-                        if(uri.get(i).equals(imageUri)){
-                            uri.remove(i);
+                    for(int i = 0;i<selectImage.size();i++){
+                        if(selectImage.get(i).equals(images.get(position))){
+                            selectImage.remove(i);
                         }
                     }
                 }
@@ -100,8 +99,8 @@ public class GridViewBaseAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public ArrayList<Uri> getCheckUri(){
-        return uri;
+    public ArrayList<FileInfo> getCheckUri(){
+        return selectImage;
     }
     private static class ViewHolder {
         ImageView img1;

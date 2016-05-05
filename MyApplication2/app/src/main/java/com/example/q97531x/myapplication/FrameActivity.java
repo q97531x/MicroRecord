@@ -18,8 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import net.tsz.afinal.FinalDb;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,6 +35,7 @@ import fragment.BudgetFragment;
 import fragment.DetailFragment;
 import fragment.MoreFragment;
 import fragment.ReportFragment;
+import util.GlideCircleTransform;
 import util.Utils;
 
 /**
@@ -46,9 +50,10 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     LinearLayout fragmentBox;
     RelativeLayout ll_detail,ll_report,ll_remind,ll_budget,ll_more;
     LinearLayout ll_login;
-    ImageView detailImage,reportImage,remindImage,budgetImage,moreImage;
-    TextView detailText,reportText,remindText,budgetText,moreText;
+    ImageView detailImage,reportImage,remindImage,budgetImage,moreImage,icon_login;
+    TextView detailText,reportText,remindText,budgetText,moreText,tx_login;
     Calendar calendar;
+    int flag = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         db = FinalDb.create(this);
@@ -93,12 +98,14 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         remindImage = (ImageView)findViewById(R.id.icon_remind);
         budgetImage = (ImageView)findViewById(R.id.icon_budget);
         moreImage = (ImageView)findViewById(R.id.icon_more);
+        icon_login = (ImageView)findViewById(R.id.icon_login);
         //文字初始化
         detailText = (TextView)findViewById(R.id.detail);
         reportText = (TextView)findViewById(R.id.report);
         remindText = (TextView)findViewById(R.id.remind);
         budgetText = (TextView)findViewById(R.id.budget);
         moreText = (TextView)findViewById(R.id.more);
+        tx_login = (TextView)findViewById(R.id.tx_login);
 
         fragmentBox = (LinearLayout)findViewById(R.id.fragmentBox);
         ll_login.setOnClickListener(this);
@@ -107,12 +114,20 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         ll_remind.setOnClickListener(this);
         ll_budget.setOnClickListener(this);
         ll_more.setOnClickListener(this);
+        loadAvatar();
+    }
+    private void loadAvatar(){
+        if(!getSharedPreferences("User",MODE_PRIVATE).getString("nick","").equals("")){
+            flag = 1;
+        }
+        Glide.with(this).load(getSharedPreferences("User",MODE_PRIVATE).getString("avatar","")).transform(new GlideCircleTransform(FrameActivity.this)).into(icon_login);
+        tx_login.setText(getSharedPreferences("User",MODE_PRIVATE).getString("nick","请登录"));
     }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_login:
-                if (App.getUser()==0) {
+                if (App.getUser()==0&&flag == 0) {
                     Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                     /*Intent intent = new Intent(this,PickPhotoActivity.class);
@@ -180,60 +195,11 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         imageView.setBackgroundResource(resId);
         textView.setTextColor(getResources().getColor(R.color.white));
     }
-    /*private void initClick(){
-        detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detail.setBackgroundResource(R.drawable.icon_graybg);
-                report.setBackgroundResource(R.drawable.icon_graybg2);
-                budget.setBackgroundResource(R.drawable.icon_graybg2);
-                more.setBackgroundResource(R.drawable.icon_graybg2);
-                DetailFragment deFragment = new DetailFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, deFragment).commit();
-            }
-        });
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detail.setBackgroundResource(R.drawable.icon_graybg2);
-                report.setBackgroundResource(R.drawable.icon_graybg);
-                budget.setBackgroundResource(R.drawable.icon_graybg2);
-                more.setBackgroundResource(R.drawable.icon_graybg2);
-                Log.v("click", "click1");
-                ReportFragment reFragment = new ReportFragment();
-                Bundle report = new Bundle();
-                report.putString("redate", redate);
-                reFragment.setArguments(report);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, reFragment).commit();
-            }
-        });
-        budget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detail.setBackgroundResource(R.drawable.icon_graybg2);
-                report.setBackgroundResource(R.drawable.icon_graybg2);
-                budget.setBackgroundResource(R.drawable.icon_graybg);
-                more.setBackgroundResource(R.drawable.icon_graybg2);
-                BudgetFragment buFragment = new BudgetFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, buFragment).commit();
-            }
-        });
-        more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detail.setBackgroundResource(R.drawable.icon_graybg2);
-                report.setBackgroundResource(R.drawable.icon_graybg2);
-                budget.setBackgroundResource(R.drawable.icon_graybg2);
-                more.setBackgroundResource(R.drawable.icon_graybg);
-                MoreFragment moFragment = new MoreFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentBox, moFragment).commit();
-            }
-        });
 
-    }*/
     @Override
     protected void onResume() {
         super.onResume();
+        loadAvatar();
         /*if(Utils.notification) {
             it = getIntent();
             Utils.toast("frame");
@@ -245,7 +211,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     // 连续按2次退出

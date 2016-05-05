@@ -12,8 +12,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.q97531x.myapplication.Bean.FileInfo;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
+import model.Bmob.Person;
+import util.GlideCircleTransform;
+import util.Utils;
 
 /**
  * Created by XmacZone on 16/3/24.
@@ -24,6 +33,7 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
     private RelativeLayout rl_sex;
     private Typeface iconfont;
     private final int RESULT_REQUEST_PHOTO = 1005;
+    private ArrayList<FileInfo> uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +62,7 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
         complete = (TextView)findViewById(R.id.complete);
         rl_sex = (RelativeLayout)findViewById(R.id.rl_sex);
         camera.setOnClickListener(this);
+        complete.setOnClickListener(this);
     }
 
     /**
@@ -65,8 +76,8 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == RESULT_REQUEST_PHOTO){
             if(resultCode == RESULT_OK){
-                ArrayList<Uri> uri = data.getParcelableArrayListExtra("data");
-                Glide.with(this).load(uri.get(0)).into(camera);
+                uri = data.getParcelableArrayListExtra("data");
+                Glide.with(this).load(uri.get(0).getUri()).transform(new GlideCircleTransform(AvatarActivity.this)).into(camera);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -84,7 +95,39 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
                 startActivityForResult(intent,RESULT_REQUEST_PHOTO);
                 break;
             case R.id.complete:
+                String picPath = uri.get(0).getFilePath();
+                final BmobFile bmobFile = new BmobFile(new File(picPath));
+                bmobFile.uploadblock(AvatarActivity.this, new UploadFileListener() {
+                    @Override
+                    public void onSuccess() {
+                        //bmobFile.getFileUrl(context) url
+                        Person person = new Person();
+                        person.setAvatar(bmobFile.getFileUrl(AvatarActivity.this));
+                        person.update(AvatarActivity.this, "2b3ebd9604", new UpdateListener() {
+                            @Override
+                            public void onSuccess() {
+                                finish();
+                            }
 
+                            @Override
+                            public void onFailure(int i, String s) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onProgress(Integer value) {
+                        super.onProgress(value);
+//                        Utils.toast(value+"%");
+                    }
+
+                    @Override
+                    public void onFailure(int i, String s) {
+
+                    }
+                });
                 break;
         }
     }

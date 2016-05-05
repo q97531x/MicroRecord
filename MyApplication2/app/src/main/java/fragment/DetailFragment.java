@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -12,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -153,6 +155,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 outcomeLayout.setBackgroundResource(R.color.white);
                 incomeLayout.setBackgroundResource(R.color.orange);
                 type = "outcome";
+//                List<Outcome> out = db.findAll(Outcome.class);
                 DataBase(date);
             }
         });
@@ -166,6 +169,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 outcomeLayout.setBackgroundResource(R.color.orange);
                 incomeLayout.setBackgroundResource(R.color.white);
                 type = "income";
+//                List<Income> in = db.findAll(Income.class);
                 DataBase(date);
             }
         });
@@ -255,11 +259,26 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
             });*/
             lv.SetRemoveListener(new SlideListView.RemoveListener() {
                 @Override
-                public void removeItem(SlideListView.RemoveDirection direction, int position) {
+                public void removeItem(SlideListView.RemoveDirection direction,final int position) {
                     if (direction == SlideListView.RemoveDirection.RIGHT) {
                         Log.e("id", outcomeList.get(position).getOutcomeId() + "");
-                        db.deleteById(Outcome.class, outcomeList.get(position).getOutcomeId());
-                        DataBase(date);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("是否确认删除该条记录?");
+                        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.deleteById(Outcome.class, outcomeList.get(position).getOutcomeId());
+                                DataBase(date);
+                            }
+                        });
+                        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DataBase(date);
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.show();
 
                     } else {
                         Intent intent = new Intent(getActivity(), WriteActivity.class);
@@ -271,8 +290,49 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                 }
             });
         } else if (flag == 1) {
-            List<Income> incomeList = db.findAllByWhere(Income.class, " incomeTime=\"" + date + "\"");
-            Log.e("income", incomeList.toString());
+            final List<Income> incomeList = db.findAllByWhere(Income.class, " incomeMonth=\"" + date + "\"");
+            final ArrayList<Float> listAmount = new ArrayList<>();
+            final ArrayList<String> listType = new ArrayList<>();
+            final ArrayList<String> listTime = new ArrayList<>();
+
+            for (int i = 0; i < incomeList.size(); i++) {
+                listAmount.add(incomeList.get(i).getIncomeAmount());
+                listType.add(incomeList.get(i).getIncomeType());
+                listTime.add(incomeList.get(i).getIncomeTime());
+            }
+            final DetailAdapter adapter = new DetailAdapter(getActivity(), listAmount, listTime, listType);
+            lv.setAdapter(adapter);
+            lv.SetRemoveListener(new SlideListView.RemoveListener() {
+                @Override
+                public void removeItem(SlideListView.RemoveDirection direction, final int position) {
+                    if (direction == SlideListView.RemoveDirection.RIGHT) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("是否确认删除该条记录?");
+                        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                db.deleteById(Income.class, incomeList.get(position).getIncomeId());
+                                DataBase(date);
+                            }
+                        });
+                        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DataBase(date);
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.show();
+                    } else {
+                        Intent intent = new Intent(getActivity(), WriteActivity.class);
+                        intent.putExtra("id", incomeList.get(position).getIncomeId() + "");
+                        intent.putExtra("aim", "update");
+                        intent.putExtra("type", type);
+                        startActivityForResult(intent, UPDATE);
+                    }
+                }
+            });
+            /*Log.e("income", incomeList.toString()+"ss");
             List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
             for (int i = 0; i < incomeList.size(); i++) {
                 Map<String, Object> listItem = new HashMap<String, Object>();
@@ -298,7 +358,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                     intent.putExtra("bd", bundle);
                     startActivityForResult(intent, RequestWrite);
                 }
-            });
+            });*/
         }
     }
 

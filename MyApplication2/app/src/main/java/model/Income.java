@@ -9,26 +9,23 @@ import net.tsz.afinal.annotation.sqlite.Table;
 @Table(name = "Income")
 public class Income {
     @Id(column="incomeId")
-    int userId;     //用户id
-   // int incomeId; 		//主键，收入id
+         //用户id
+    int incomeId; 		//主键，收入id
     String incomeType;      //收入类型
     String incomeTime;		 //收入时间
+    String incomeMonth;//月
+    String incomeWeek;//周
     String reIncomeTime;
     String incomeHour;
-    double incomeAmount;		//收入金额
+    float incomeAmount;		//收入金额
     String incomeNote;      //收入备注
-    public int getUserId() {
-        return userId;
-    }
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-   /* public int getIncomeId(){
+
+    public int getIncomeId(){
         return incomeId;
     }
     public void setIncomeId(int incomeId){
         this.incomeId = incomeId;
-    }*/
+    }
     public String getIncomeType(){
         return incomeType;
     }
@@ -53,10 +50,10 @@ public class Income {
     public void setIncomeHour(String incomeHour){
         this.incomeHour = incomeHour;
     }
-    public double getIncomeAmount() {
+    public float getIncomeAmount() {
         return incomeAmount;
     }
-    public void setIncomeAmount(double incomeAmount) {
+    public void setIncomeAmount(float incomeAmount) {
         this.incomeAmount = incomeAmount;
     }
     public String getIncomeNote() {
@@ -66,4 +63,19 @@ public class Income {
         this.incomeNote = incomeNote;
     }
 
+    public String getIncomeMonth() {
+        return incomeMonth;
+    }
+
+    public void setIncomeMonth(String incomeMonth) {
+        this.incomeMonth = incomeMonth;
+    }
+
+    public String getIncomeWeek() {
+        return incomeWeek;
+    }
+
+    public void setIncomeWeek(String incomeWeek) {
+        this.incomeWeek = incomeWeek;
+    }
 }

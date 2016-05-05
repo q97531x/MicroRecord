@@ -10,6 +10,7 @@ public class Person extends BmobObject{
     private String password;    //密码
     private String email;       //邮箱
     private String phoneNumber; //手机号码
+    private String avatar;      //头像
     //getter&&setter
     public String getUserName(){
         return userName;
@@ -34,5 +35,13 @@ public class Person extends BmobObject{
     }
     public void setphoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

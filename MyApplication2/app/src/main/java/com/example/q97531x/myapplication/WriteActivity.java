@@ -79,6 +79,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
             id = intent.getStringExtra("id");
         }
         type = intent.getStringExtra("type");
+        Log.e("type",type);
         aim = intent.getStringExtra("aim");
         views = new ArrayList<>();
         initToolbar();
@@ -139,13 +140,18 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
                     } else {
                         Income income = new Income();
                         income.setIncomeTime(title.getText().toString());
+                        income.setReIncomeTime(year + "-" + (month + 1));
+                        income.setIncomeMonth(year + "-" + (month + 1));
+                        income.setIncomeWeek(weekofMonth + "");
+                        Log.e("date",year+"-"+(month+1));
                         if (!editAmount.getText().toString().equals("")) {
-                            income.setIncomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            income.setIncomeAmount((float)Double.parseDouble(editAmount.getText().toString()));
                             if (!typeEdit.getText().toString().equals("")) {
                                 income.setIncomeType(typeEdit.getText().toString());
                                 if (!editDetail.getText().toString().equals("")) {
                                     income.setIncomeNote(editDetail.getText().toString());
                                     db.save(income);
+                                    Log.e("save","save");
                                     isComplete = true;
                                 } else {
                                     income.setIncomeNote("");
@@ -195,8 +201,11 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
                     } else {
                         Income income = new Income();
                         income.setIncomeTime(title.getText().toString());
+                        income.setReIncomeTime(year + "-" + (month + 1));
+                        income.setIncomeMonth(year + "-" + (month + 1));
+                        income.setIncomeWeek(weekofMonth + "");
                         if (!editAmount.getText().toString().equals("")) {
-                            income.setIncomeAmount(Double.parseDouble(editAmount.getText().toString()));
+                            income.setIncomeAmount((float)Double.parseDouble(editAmount.getText().toString()));
                             if (!typeEdit.getText().toString().equals("")) {
                                 income.setIncomeType(typeEdit.getText().toString());
                                 if (!editDetail.getText().toString().equals("")) {
@@ -258,12 +267,22 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
         editDetail = (EditText) findViewById(R.id.editDetail);
         typeEdit = (EditText) findViewById(R.id.type);
         if (id != null) {
-            Outcome outcome = db.findById(id, Outcome.class);
-            if (aim.equals("update")) {
-                editAmount.setText(outcome.getOutcomeAmount() + "");
-                typeEdit.setText(outcome.getOutcomeType());
-                editDetail.setText(outcome.getOutcomeNote());
-                typeEdit.setBackgroundResource(R.color.orange);
+            if(type.equals("outcome")) {
+                Outcome outcome = db.findById(id, Outcome.class);
+                if (aim.equals("update")) {
+                    editAmount.setText(outcome.getOutcomeAmount() + "");
+                    typeEdit.setText(outcome.getOutcomeType());
+                    editDetail.setText(outcome.getOutcomeNote());
+                    typeEdit.setBackgroundResource(R.color.orange);
+                }
+            }else {
+                Income income = db.findById(id,Income.class);
+                if(aim.equals("update")){
+                    editAmount.setText(income.getIncomeAmount() + "");
+                    typeEdit.setText(income.getIncomeType());
+                    editDetail.setText(income.getIncomeNote());
+                    typeEdit.setBackgroundResource(R.color.orange);
+                }
             }
         }
         more.setOnClickListener(this);

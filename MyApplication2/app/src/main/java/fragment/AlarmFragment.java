@@ -10,12 +10,14 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -62,10 +64,33 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
         }
         adapter = new AlarmAdapter(getActivity(),db,alarmRate);
         clockList.setAdapter(adapter);
+        clockList.setGroupIndicator(null);
+        /*clockList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                Log.e("Long","LongClick");
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("是否确定删除该闹钟");
+                builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.deleteById(AlarmClock.class,adapter.getGroupId(position));
+                    }
+                });
+                builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+                return true;
+            }
+        });*/
         weekDay = t.weekDay;
         hour = t.hour;
         minute = t.minute;
-        Log.e("week",""+t.weekDay+t.monthDay);
+//        Log.e("week",""+t.weekDay+t.monthDay);
         return view;
     }
     public void setTitle(Toolbar toolbar){

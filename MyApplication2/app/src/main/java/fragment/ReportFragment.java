@@ -219,6 +219,7 @@ public class ReportFragment extends Fragment {
     }
     public void invalidOutcome(){
             List<Outcome> MpaOutcome = db.findAllByWhere(Outcome.class, " reOutcomeTime=\"" + reportDate.getText().toString() + "\"");
+            Log.e("out",MpaOutcome.size()+"");
             ArrayList list = new ArrayList();
             outKey = new ArrayList<Integer>();
             outcomeType = new ArrayList();
@@ -294,13 +295,14 @@ public class ReportFragment extends Fragment {
                         }
                         l[8]++;
                         sum[8] = sum[8] + MpaOutcome.get(i).getOutcomeAmount();
-                    }else if (MpaOutcome.get(i).getOutcomeType().equals("其他")){
+                    }else{
                         if(l[9]<1){
                             outKey.add(9);
                             outtag++;
                         }
                         l[9]++;
                         sum[9] = sum[9] + MpaOutcome.get(i).getOutcomeAmount();
+                        Log.e("sum",sum[9]+"");
                     }
                 }
 
@@ -395,7 +397,7 @@ public class ReportFragment extends Fragment {
                         inKey.add(6);
                     }
                     m[6]++;
-                }else if(MpaIncome.get(i).getIncomeType().equals("其他")){
+                }else{
                     sum[7] = sum[7] + MpaIncome.get(i).getIncomeAmount();
                     if(m[7]<1){
                         intag++;

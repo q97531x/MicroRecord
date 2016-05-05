@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +30,7 @@ import adapter.GridViewBaseAdapter;
 public class PickPhotoActivity extends BaseActivity {
     private GridView gridView;
     private GridViewBaseAdapter adapter;
+    Uri mUri = Uri.parse("content://media/external/images/media");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class PickPhotoActivity extends BaseActivity {
                     image.setId(cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
                     image.setFilePath(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)));
                     image.setFileName(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME)));
+                    image.setUri(Uri.withAppendedPath(mUri, "" + cursor.getInt(cursor.getColumnIndex(MediaStore.Images.Media._ID))));
                     images.add(image);
                 }
             }
@@ -109,10 +112,10 @@ public class PickPhotoActivity extends BaseActivity {
         if(item.getItemId() == R.id.action_pick){
             //传递参数
             Intent intent = new Intent();
-            intent.putExtra("data",adapter.getCheckUri());
+            intent.putParcelableArrayListExtra("data",adapter.getCheckUri());
             setResult(Activity.RESULT_OK,intent);
-            finish();
         }
+        finish();
         return super.onOptionsItemSelected(item);
     }
 

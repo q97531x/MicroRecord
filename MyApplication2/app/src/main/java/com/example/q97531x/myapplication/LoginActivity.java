@@ -1,6 +1,7 @@
 package com.example.q97531x.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,12 +24,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText login_userName;
     private EditText login_password;
     private TextView btn_login,register;
+    private SharedPreferences sharedPreferences;
     //参数
     private boolean login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = getSharedPreferences("User",MODE_PRIVATE);
+
         initView();
 
     }
@@ -54,6 +58,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     public void onSuccess(List<Person> list) {
                         if (login_password.getText().toString().equals(list.get(0).getpassword())) {
                             Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("nick",list.get(0).getUserName());
+                            editor.putString("uid",list.get(0).getObjectId());
+                            editor.putString("avatar",list.get(0).getAvatar());
+                            editor.apply();
                             finish();
                         }
                     }
