@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.q97531x.myapplication.Bean.FileInfo;
@@ -95,40 +96,45 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
                 startActivityForResult(intent,RESULT_REQUEST_PHOTO);
                 break;
             case R.id.complete:
-                String picPath = uri.get(0).getFilePath();
-                final BmobFile bmobFile = new BmobFile(new File(picPath));
-                bmobFile.uploadblock(AvatarActivity.this, new UploadFileListener() {
-                    @Override
-                    public void onSuccess() {
-                        //bmobFile.getFileUrl(context) url
-                        Person person = new Person();
-                        person.setAvatar(bmobFile.getFileUrl(AvatarActivity.this));
-                        person.update(AvatarActivity.this, "2b3ebd9604", new UpdateListener() {
-                            @Override
-                            public void onSuccess() {
-                                finish();
-                            }
+                if(!nick.getText().toString().equals("")&&!sex.getText().toString().equals("")) {
+                    String picPath = uri.get(0).getFilePath();
+                    final BmobFile bmobFile = new BmobFile(new File(picPath));
+                    bmobFile.uploadblock(AvatarActivity.this, new UploadFileListener() {
+                        @Override
+                        public void onSuccess() {
+                            //bmobFile.getFileUrl(context) url
+                            Person person = new Person();
+                            person.setAvatar(bmobFile.getFileUrl(AvatarActivity.this));
+                            person.update(AvatarActivity.this, "2b3ebd9604", new UpdateListener() {
+                                @Override
+                                public void onSuccess() {
+                                    finish();
+                                }
 
-                            @Override
-                            public void onFailure(int i, String s) {
+                                @Override
+                                public void onFailure(int i, String s) {
 
-                            }
-                        });
+                                }
+                            });
 
-                    }
+                        }
 
-                    @Override
-                    public void onProgress(Integer value) {
-                        super.onProgress(value);
+                        @Override
+                        public void onProgress(Integer value) {
+                            super.onProgress(value);
 //                        Utils.toast(value+"%");
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(int i, String s) {
+                        @Override
+                        public void onFailure(int i, String s) {
 
-                    }
-                });
+                        }
+                    });
+                }else{
+                    Toast.makeText(AvatarActivity.this,"请填写完整信息",Toast.LENGTH_SHORT).show();
+                }
                 break;
+
         }
     }
 }

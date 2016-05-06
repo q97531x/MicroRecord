@@ -1,6 +1,7 @@
 package com.example.q97531x.myapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -75,8 +76,9 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     }
     public void initToolbar(){
         toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("账单");
+        toolbar.setTitleTextColor(R.color.white);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("明细");
         //toolbar.setSubtitle("2016.2.25");
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerlayout);
         drawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.drawer_open,

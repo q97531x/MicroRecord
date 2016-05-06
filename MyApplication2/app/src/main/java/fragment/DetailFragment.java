@@ -127,7 +127,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 Log.e("position", "firstVisible:" + firstVisibleItem + "top:" + topPosition);
-                if (firstVisibleItem > topPosition&&scrollStop) {
+                if (firstVisibleItem > topPosition) {
                     //隐藏按钮
 //                    write.setVisibility(View.GONE);
                     //调用动画
@@ -135,11 +135,12 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                         Animation(write, 0);
                     }
                     scrollStop = false;
-                } else if (firstVisibleItem < topPosition&&scrollStop) {
+                } else if (firstVisibleItem < topPosition) {
 //                    write.setVisibility(View.VISIBLE);
                     if(slideUp) {
                         Animation(write, 1);
                     }
+
                     scrollStop = false;
                 }
                 topPosition = firstVisibleItem;

@@ -4,6 +4,7 @@ package com.example.q97531x.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     //控件
     private EditText userName,email,password,confirm_password;
     private TextView register;
+    private Toolbar toolbar;
     //参数
 
     @Override
@@ -29,7 +31,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void initToolbar(){
-
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("注册");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back01);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void initView(){
@@ -44,28 +55,30 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.register:
-                final Person person = new Person();
-                person.setUserName(userName.getText().toString());
-                person.setemail(email.getText().toString());
-                person.setpassword(password.getText().toString());
-                person.save(RegisterActivity.this, new SaveListener() {
-                    @Override
-                    public void onSuccess() {
-                        Toast.makeText(RegisterActivity.this,"添加数据成功，返回objectId为：" + person.getObjectId(),Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterActivity.this,AvatarActivity.class);
-                        startActivity(intent);
-                    }
+                if(!userName.getText().toString().equals("")&&!email.getText().toString().equals("")&&!password.getText().toString().equals("")&&!confirm_password.getText().toString().equals("")) {
+                    final Person person = new Person();
+                    person.setUserName(userName.getText().toString());
+                    person.setemail(email.getText().toString());
+                    person.setpassword(password.getText().toString());
+                    person.save(RegisterActivity.this, new SaveListener() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(RegisterActivity.this, "添加数据成功，返回objectId为：" + person.getObjectId(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this, AvatarActivity.class);
+                            startActivity(intent);
+                        }
 
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Toast.makeText(RegisterActivity.this,"添加数据失败,请重试！",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(int i, String s) {
+                            Toast.makeText(RegisterActivity.this, "添加数据失败,请重试！", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
                 break;
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_register, menu);
@@ -85,5 +98,5 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

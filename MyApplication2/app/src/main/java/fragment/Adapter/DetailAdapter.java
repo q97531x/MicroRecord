@@ -86,6 +86,21 @@ public class DetailAdapter extends BaseAdapter{
             case "其他":
                 viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_others);
                 break;
+            case "兼职":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_parttimejib);
+                break;
+            case "红包":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_dividend);
+                break;
+            case "投资收益":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_stocks);
+                break;
+            case "生活费":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_parents);
+                break;
+            case "工资":
+                viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_prize);
+                break;
             default:
                 viewHolder.detailTypeIcon.setBackgroundResource(R.drawable.icons_others);
                 break;

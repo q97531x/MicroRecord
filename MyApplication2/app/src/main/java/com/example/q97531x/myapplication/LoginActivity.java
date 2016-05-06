@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText login_password;
     private TextView btn_login,register;
     private SharedPreferences sharedPreferences;
+    private Toolbar toolbar;
     //参数
     private boolean login;
     @Override
@@ -32,9 +35,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sharedPreferences = getSharedPreferences("User",MODE_PRIVATE);
-
+        initToolbar();
         initView();
 
+    }
+
+    public void initToolbar(){
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("登录");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back01);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     public void initView(){
         login_userName = (EditText)findViewById(R.id.login_userName);
@@ -81,7 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
     }
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_login, menu);
@@ -101,5 +117,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

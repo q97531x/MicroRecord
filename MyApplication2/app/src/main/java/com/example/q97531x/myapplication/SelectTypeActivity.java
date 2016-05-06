@@ -82,16 +82,19 @@ public class SelectTypeActivity extends AppCompatActivity {
             typeIcon.add(R.drawable.icons_others);
         }else{
             typeData = new ArrayList<>();
-            typeData.add("餐饮");
-            typeData.add("购物");
-            typeData.add("交通");
-            typeData.add("娱乐");
-            typeData.add("居家");
-            typeData.add("医药");
-            typeData.add("进修");
-            typeData.add("人情");
-            typeData.add("投资");
+            typeIcon = new ArrayList<>();
+            typeData.add("兼职");
+            typeData.add("红包");
+            typeData.add("投资收益");
+            typeData.add("生活费");
+            typeData.add("工资");
             typeData.add("其他");
+            typeIcon.add(R.drawable.icons_parttimejib);
+            typeIcon.add(R.drawable.icons_dividend);
+            typeIcon.add(R.drawable.icons_stocks);
+            typeIcon.add(R.drawable.icons_parents);
+            typeIcon.add(R.drawable.icons_prize);
+            typeIcon.add(R.drawable.icons_others);
         }
     }
 }
