@@ -1,6 +1,9 @@
 package com.example.q97531x.myapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,8 +48,9 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
     }
     private void initToolbar() {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.icons_back_s);
+        toolbar.setNavigationIcon(R.drawable.back01);
         toolbar.setTitle("完善资料");
+        toolbar.setTitleTextColor(Color.parseColor("#FAF4ED"));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +68,7 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
         rl_sex = (RelativeLayout)findViewById(R.id.rl_sex);
         camera.setOnClickListener(this);
         complete.setOnClickListener(this);
+        rl_sex.setOnClickListener(this);
     }
 
     /**
@@ -134,7 +139,19 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
                     Toast.makeText(AvatarActivity.this,"请填写完整信息",Toast.LENGTH_SHORT).show();
                 }
                 break;
-
+            case R.id.rl_sex:
+                String[] sex1 = {"男","女"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(AvatarActivity.this);
+                builder.setItems(sex1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which == 0){
+                            sex.setText("男");
+                        }else {
+                            sex.setText("女");
+                        }
+                    }
+                }).show();
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.q97531x.myapplication;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +34,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void initToolbar(){
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("注册");
+        toolbar.setTitleTextColor(Color.parseColor("#FAF4ED"));
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back01);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

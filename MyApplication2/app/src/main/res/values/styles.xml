@@ -1,8 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="AppTheme.Base">
-        <!-- Customize your theme here. -->
-    </style>
+
 
     <style name="AppTheme.Base" parent="Theme.AppCompat">
         <item name="windowActionBar">false</item>
@@ -11,10 +9,15 @@
         <item name="colorPrimary">@color/accent_material_dark</item>
         <!--Status bar color-->
         <item name="colorPrimaryDark">#26c6da</item>
+        <item name="android:textColorPrimary">#faf4ed</item>
+        <item name="android:textColorSecondary">#faf4ed</item>
         <!--Window color-->
         <item name="android:windowBackground">@color/dim_foreground_material_dark</item>
     </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
 
+    </style>
     <style name="MyDialog" parent="android:style/Theme.Dialog">
 
         <!-- 背景颜色及透明程度 -->
@@ -27,7 +30,12 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowFrame">@null</item>
     </style>
-
+    <!--ToolBar 字体配置-->
+    <style name="ToolbarTitleAppearance">
+        <item name="android:textSize">18sp</item>
+        <!--<item name="android:textStyle">normal</item>-->
+        <item name="android:textColor">@color/title</item>
+    </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

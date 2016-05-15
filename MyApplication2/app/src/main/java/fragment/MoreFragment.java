@@ -1,20 +1,21 @@
 package fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,21 +23,10 @@ import com.example.q97531x.myapplication.AboutActivity;
 import com.example.q97531x.myapplication.MainActivity;
 import com.example.q97531x.myapplication.PasswordActivity;
 import com.example.q97531x.myapplication.R;
-import com.example.q97531x.myapplication.SetRemindActivity;
+import com.example.q97531x.myapplication.RemindNewActivity;
 import com.example.q97531x.myapplication.SuggestActivity;
-import com.example.q97531x.myapplication.remindActivity;
 
 import net.tsz.afinal.FinalDb;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.HttpHandler;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -58,7 +48,7 @@ import model.User;
  * Created by Administrator on 2015/7/29.
  */
 public class MoreFragment extends Fragment {
-        LinearLayout morePassword,moreRemind,moreHelp,moreSuggest,moreUpdate,aboutUs,moreCopy,moreDelete;
+    RelativeLayout morePassword,moreRemind,moreHelp,moreSuggest,moreUpdate,aboutUs,moreCopy,moreDelete;
         FinalDb db;
         TextView textView;
         String urlStr = "https://raw.githubusercontent.com/q97531x/home/master/verson.txt",apkurl = "https://github.com/q97531x/home/raw/master/MicroRecord.apk";
@@ -72,15 +62,14 @@ public class MoreFragment extends Fragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_more,container,false);
-            morePassword = (LinearLayout)view.findViewById(R.id.morePassword);
-            moreRemind = (LinearLayout)view.findViewById(R.id.moreRemind);
-            moreHelp = (LinearLayout)view.findViewById(R.id.moreHelp);
-            moreSuggest = (LinearLayout)view.findViewById(R.id.moreSuggest);
-            moreUpdate = (LinearLayout)view.findViewById(R.id.moreUpdate);
-            aboutUs = (LinearLayout)view.findViewById(R.id.aboutUs);
-            moreCopy = (LinearLayout)view.findViewById(R.id.moreCopy);
-            moreDelete = (LinearLayout)view.findViewById(R.id.moreDelete);
-            textView = (TextView)view.findViewById(R.id.verson);
+            morePassword = (RelativeLayout)view.findViewById(R.id.morePassword);
+            moreRemind = (RelativeLayout)view.findViewById(R.id.moreRemind);
+            moreHelp = (RelativeLayout)view.findViewById(R.id.moreHelp);
+            moreSuggest = (RelativeLayout)view.findViewById(R.id.moreSuggest);
+            moreUpdate = (RelativeLayout)view.findViewById(R.id.moreUpdate);
+            aboutUs = (RelativeLayout)view.findViewById(R.id.aboutUs);
+            moreCopy = (RelativeLayout)view.findViewById(R.id.moreCopy);
+            moreDelete = (RelativeLayout)view.findViewById(R.id.moreDelete);
             db = FinalDb.create(getActivity());
             //如果文件不存在则创建
             if (!tmpFile.exists()) {
@@ -98,7 +87,7 @@ public class MoreFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(getActivity(),"提醒功能仍在施工中，如有不便，敬请谅解",Toast.LENGTH_LONG).show();
-                    Intent intent_remind = new Intent(getActivity(),SetRemindActivity.class);
+                    Intent intent_remind = new Intent(getActivity(),RemindNewActivity.class);
                     startActivity(intent_remind);
                 }
             });
@@ -149,7 +138,9 @@ public class MoreFragment extends Fragment {
                                 //比较服务端版本号与本机版本号，如果本机版本号小则下载apk更新
                                 if(httpversion > version){
                                     //Log.e("true","true");
-
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(),"正在下载",Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
                                     URL versionurl=new URL(apkurl);
                                     HttpURLConnection con=(HttpURLConnection)versionurl.openConnection();
                                     InputStream is = con.getInputStream();
@@ -227,12 +218,26 @@ public class MoreFragment extends Fragment {
             moreDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    db.deleteAll(Budget.class);
-                    db.deleteAll(Income.class);
-                    db.deleteAll(Outcome.class);
-                    db.deleteAll(Remind.class);
-                    db.deleteAll(User.class);
-                    Toast.makeText(getActivity(),"数据已清除",Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("是否确认删除数据");
+                    builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.deleteAll(Budget.class);
+                            db.deleteAll(Income.class);
+                            db.deleteAll(Outcome.class);
+                            db.deleteAll(Remind.class);
+                            db.deleteAll(User.class);
+                            Toast.makeText(getActivity(), "数据已清除", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                   builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                           dialog.dismiss();
+                       }
+                   });
+                    builder.show();
                 }
             });
             return view;

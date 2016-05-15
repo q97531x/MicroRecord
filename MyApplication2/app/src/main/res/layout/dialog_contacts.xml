@@ -9,9 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/deepgrey"
         android:textSize="14sp"
-        android:text="真实姓名"/>
+        android:text="昵称"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/deepgrey"
         android:textSize="14sp"
         android:text="联系人手机号"/>
     <RelativeLayout

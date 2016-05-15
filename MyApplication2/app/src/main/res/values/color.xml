@@ -15,6 +15,11 @@
     <color name="green">#4db6ac</color>
     <color name="lightdark">#323232</color>
     <color name="lightgrey">#FF999999</color>
-    <color name="blue">#FF0068cc</color>
+    <color name="blue">#ff860d</color>
     <color name="desc">#FFCCCCCC</color>
+    <color name="dic">#FF8002</color>
+    <color name="more_back">#f2f2f2</color>
+    <color name="line">#d3d3d3</color>
+    <color name="title">#faf4ed</color>
+    <color name="Red">#f87e05</color>
 </resources>

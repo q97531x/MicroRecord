@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Budget;
+import model.Contact;
 import model.Income;
 import model.Outcome;
 import model.Remind;
@@ -49,7 +50,8 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
     //控件
     private TextView title, confirm;
     private ImageView more;
-    private EditText editAmount, editDetail, typeEdit;
+    private EditText editAmount, editDetail;
+    private TextView typeEdit;
     //参数
     private Typeface iconfont;
     ArrayList<View> views;
@@ -97,7 +99,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == GETTYPE) {
-                typeEdit.setBackgroundResource(R.drawable.rect_orange_shape);
+//                typeEdit.setBackgroundResource(R.drawable.rect_orange_shape);
                 typeEdit.setText(data.getStringExtra("selectType"));
             }
         }
@@ -265,7 +267,7 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
         confirm = (TextView) findViewById(R.id.confirm);
         editAmount = (EditText) findViewById(R.id.editAmount);
         editDetail = (EditText) findViewById(R.id.editDetail);
-        typeEdit = (EditText) findViewById(R.id.type);
+        typeEdit = (TextView) findViewById(R.id.type);
         if (id != null) {
             if(type.equals("outcome")) {
                 Outcome outcome = db.findById(id, Outcome.class);
@@ -283,6 +285,12 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
                     editDetail.setText(income.getIncomeNote());
                     typeEdit.setBackgroundResource(R.color.orange);
                 }
+            }
+        }else{
+            if(type.equals("outcome")){
+                typeEdit.setText("餐饮");
+            }else {
+                typeEdit.setText("生活费");
             }
         }
         more.setOnClickListener(this);
@@ -314,7 +322,9 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
                 if (py >= percent) {
                     //超支
                     Intent intent = new Intent(this, RemindBroadcast.class);
-                    switch (reminds.get(0).getStyle()) {
+                    intent.setAction("Sms");
+
+                    /*switch (reminds.get(0).getStyle()) {
                         case 0:
                             Log.e("vb", "vb");
                             intent.setAction("Vibrator");
@@ -327,13 +337,13 @@ public class WriteActivity extends BaseActivity implements View.OnClickListener 
                             break;
                         case 2:
                             intent.setAction("Sms");
-                            intent.putExtra("phoneNum", reminds.get(0).getPhoneNumber());
-                            intent.putExtra("phoneName", reminds.get(0).getName());
+                           *//* intent.putExtra("phoneNum", reminds.get(0).getPhoneNumber());
+                            intent.putExtra("phoneName", reminds.get(0).getName());*//*
                             sendBroadcast(intent);
 //                        sendSms(reminds.get(0).getPhoneNumber(),reminds.get(0).getName());
 //                        finish();
                             break;
-                    }
+                    }*/
                 }
             }
         }

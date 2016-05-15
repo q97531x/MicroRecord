@@ -11,8 +11,12 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 
-import java.io.IOException;
+import net.tsz.afinal.FinalDb;
 
+import java.io.IOException;
+import java.util.List;
+
+import model.Contact;
 import util.Utils;
 
 /**
@@ -68,7 +72,12 @@ public class RemindBroadcast extends BroadcastReceiver{
 
             Utils.toast(context,"您预算超支啦,该好好规划一下支出啦");
         }else {
-            sendSms(intent.getStringExtra("phoneNum"),intent.getStringExtra("phoneName"));
+            FinalDb db = FinalDb.create(context);
+            List<Contact> contacts = db.findAll(Contact.class);
+            for(int i = 0;i<contacts.size();i++){
+                sendSms(contacts.get(i).getPhoneNumber(),contacts.get(i).getName());
+            }
+//            sendSms(intent.getStringExtra("phoneNum"),intent.getStringExtra("phoneName"));
         }
     }
     //发送短信

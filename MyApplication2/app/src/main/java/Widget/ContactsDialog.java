@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.q97531x.myapplication.R;
 
@@ -27,6 +28,7 @@ public class ContactsDialog extends Dialog implements View.OnClickListener{
     private Context context;
     private EditText phone_num,name;
     private TextView confirm,cancel;
+    private boolean isCancel = false;
     public ContactsDialog(Context context) {
         super(context);
         this.context = context;
@@ -61,15 +63,18 @@ public class ContactsDialog extends Dialog implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.confirm:
-                if(!phone_num.getText().toString().equals("")){
+
+                if(!phone_num.getText().toString().equals("")||!name.getText().toString().equals("")){
                     phone = phone_num.getText().toString();
                     phone_name = name.getText().toString();
+                    isCancel = false;
                     dismiss();
                 }else{
-                    Utils.toast("请输入联系人手机号");
+                    Toast.makeText(context,"请输入完整信息",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.cancel:
+                isCancel = true;
                 dismiss();
                 break;
         }
@@ -80,5 +85,8 @@ public class ContactsDialog extends Dialog implements View.OnClickListener{
 
     public String getPhone_name() {
         return phone_name;
+    }
+    public boolean isCancel(){
+        return isCancel;
     }
 }

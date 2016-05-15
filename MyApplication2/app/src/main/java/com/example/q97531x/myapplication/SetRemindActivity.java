@@ -1,3 +1,4 @@
+/*
 package com.example.q97531x.myapplication;
 
 
@@ -22,9 +23,11 @@ import java.util.List;
 import Widget.ContactsDialog;
 import model.Remind;
 
+*/
 /**
  * Created by XmacZone on 16/3/21.
- */
+ *//*
+
 public class SetRemindActivity extends BaseActivity implements View.OnClickListener{
     private RelativeLayout rl_threshold,rl_style;
     private TextView threshold,style;//阈值,样式
@@ -182,7 +185,8 @@ public class SetRemindActivity extends BaseActivity implements View.OnClickListe
                         dialog.dismiss();
                     }
                 });
-                /*builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                */
+/*builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (style.getText().equals("短信提醒")) {
@@ -197,7 +201,8 @@ public class SetRemindActivity extends BaseActivity implements View.OnClickListe
                             });
                         }
                     }
-                });*/
+                });*//*
+
                 builder.show();
                 break;
         }
@@ -209,3 +214,4 @@ public class SetRemindActivity extends BaseActivity implements View.OnClickListe
         return super.onCreateOptionsMenu(menu);
     }
 }
+*/

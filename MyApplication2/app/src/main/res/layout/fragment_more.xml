@@ -2,145 +2,221 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFF">
-    <LinearLayout
+    android:background="@color/more_back">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="60dp"
         android:id="@+id/morePassword"
         android:orientation="horizontal"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/password_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:background="@color/more_back"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
-            android:text="密码保护"/>
-    </LinearLayout>
-    <LinearLayout
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:text="安全保护"/>
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
         android:id="@+id/moreRemind"
-        android:background="@drawable/remind_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        android:background="@color/more_back"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
             android:text="提醒设置"/>
-    </LinearLayout>
-    <LinearLayout
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
         android:id="@+id/moreHelp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/help_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        android:background="@color/more_back"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
             android:text="帮助"/>
-    </LinearLayout>
-    <LinearLayout
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
         android:id="@+id/moreSuggest"
-        android:background="@drawable/suggestion_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        android:background="@color/more_back"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
             android:text="意见反馈"/>
-    </LinearLayout>
-    <LinearLayout
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
         android:id="@+id/moreUpdate"
-        android:background="@drawable/update_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        android:background="@color/more_back"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/verson"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
             android:text="版本更新"/>
-    </LinearLayout>
-    <LinearLayout
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
         android:id="@+id/aboutUs"
-        android:background="@drawable/aboutwe_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        android:background="@color/more_back"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
             android:text="关于我们"/>
-    </LinearLayout>
-    <LinearLayout
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="18dp"
-        android:id="@+id/moreCopy"
-        android:background="@drawable/copy_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
-            android:text="备份"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
+        android:layout_height="60dp"
         android:id="@+id/moreDelete"
-        android:background="@drawable/clear_bg"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        android:background="@color/more_back"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_gravity="center_vertical"
-            android:text="清除数据"/>
-    </LinearLayout>
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:text="清除"/>
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/moreCopy"
+        android:orientation="horizontal"
+        android:background="@color/more_back"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:text="备份"/>
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/arrow_r"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line"/>
+    </RelativeLayout>
 </LinearLayout>

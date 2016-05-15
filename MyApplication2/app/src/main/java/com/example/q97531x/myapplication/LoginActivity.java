@@ -2,6 +2,7 @@ package com.example.q97531x.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void initToolbar(){
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("登录");
+        toolbar.setTitleTextColor(Color.parseColor("#FAF4ED"));
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.back01);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -77,7 +77,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     public void initToolbar(){
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("账单");
-        toolbar.setTitleTextColor(R.color.white);
+        toolbar.setTitleTextColor(Color.parseColor("#FAF4ED"));
         setSupportActionBar(toolbar);
         //toolbar.setSubtitle("2016.2.25");
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerlayout);

@@ -3,17 +3,34 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context="com.example.q97531x.myapplication.SuggestActivity">
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_weight="1"
-        android:id="@+id/suggest"
-        />
+        android:layout_height="60dp"
+        android:layout_weight="1">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/suggest"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/blue"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
     <Button
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:layout_weight="4"
+        android:background="@color/blue"
         android:id="@+id/support"
-        android:text="发送"/>
+        android:text="发送"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

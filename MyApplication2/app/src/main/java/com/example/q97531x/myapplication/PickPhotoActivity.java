@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +53,7 @@ public class PickPhotoActivity extends BaseActivity {
     public void initToolbar() {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         toolbar.setTitle("图片选择");
+        toolbar.setTitleTextColor(Color.parseColor("#FAF4ED"));
         toolbar.setNavigationIcon(R.drawable.back01);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
