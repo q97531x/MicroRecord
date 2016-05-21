@@ -27,16 +27,16 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void onResume() {
         super.onResume();
-        /*db = FinalDb.create(this);
+        db = FinalDb.create(this);
         List<User> userList = db.findAll(User.class);
         if (userList.size() > 0) {
             hasPassword = userList.get(0).getHasPassword();
         }
         myApplication = (MyApplication) getApplication();
-        Toast.makeText(BaseActivity.this, "" + hasPassword, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(BaseActivity.this, "" + hasPassword, Toast.LENGTH_SHORT).show();
         if (myApplication.isLocked && hasPassword) {//判断是否跳转到输入密码界面
             Intent intent = new Intent(this, CheckPasswordActivity.class);
             startActivity(intent);
-        }*/
+        }
     }
 }

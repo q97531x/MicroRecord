@@ -70,7 +70,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.btn_login:
                 Log.e("Login","Login"+login_userName.getText().toString());
                 BmobQuery<Person> query = new BmobQuery<Person>();
-                query.addWhereEqualTo("userName",login_userName.getText().toString());
+                query.addWhereEqualTo("email",login_userName.getText().toString());
                 query.findObjects(this, new FindListener<Person>() {
                     @Override
                     public void onSuccess(List<Person> list) {

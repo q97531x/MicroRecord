@@ -38,10 +38,13 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
     private Typeface iconfont;
     private final int RESULT_REQUEST_PHOTO = 1005;
     private ArrayList<FileInfo> uri;
+    private String objectId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_avatar);
+        Intent intent = getIntent();
+        objectId = intent.getStringExtra("objectId");
         iconfont = Typeface.createFromAsset(getAssets(), "iconfont.ttf");
         initToolbar();
         initView();
@@ -110,7 +113,7 @@ public class AvatarActivity extends BaseActivity implements View.OnClickListener
                             //bmobFile.getFileUrl(context) url
                             Person person = new Person();
                             person.setAvatar(bmobFile.getFileUrl(AvatarActivity.this));
-                            person.update(AvatarActivity.this, "2b3ebd9604", new UpdateListener() {
+                            person.update(AvatarActivity.this, objectId, new UpdateListener() {
                                 @Override
                                 public void onSuccess() {
                                     finish();

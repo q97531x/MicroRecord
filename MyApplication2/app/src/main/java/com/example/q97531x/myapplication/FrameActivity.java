@@ -52,7 +52,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
     RelativeLayout ll_detail,ll_report,ll_remind,ll_budget,ll_more;
     LinearLayout ll_login;
     ImageView detailImage,reportImage,remindImage,budgetImage,moreImage,icon_login;
-    TextView detailText,reportText,remindText,budgetText,moreText,tx_login;
+    TextView detailText,reportText,remindText,budgetText,moreText,tx_login,exit;
     Calendar calendar;
     int flag = 0;
     @Override
@@ -94,6 +94,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         ll_remind = (RelativeLayout)findViewById(R.id.ll_remind);
         ll_budget = (RelativeLayout)findViewById(R.id.ll_budget);
         ll_more = (RelativeLayout)findViewById(R.id.ll_more);
+        exit = (TextView)findViewById(R.id.exit);
         //图片初始化
         detailImage = (ImageView)findViewById(R.id.icon_detail);
         reportImage = (ImageView)findViewById(R.id.icon_report);
@@ -116,6 +117,7 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         ll_remind.setOnClickListener(this);
         ll_budget.setOnClickListener(this);
         ll_more.setOnClickListener(this);
+        exit.setOnClickListener(this);
         loadAvatar();
     }
     private void loadAvatar(){
@@ -130,13 +132,18 @@ public class FrameActivity extends BaseActivity implements View.OnClickListener{
         switch (v.getId()){
             case R.id.ll_login:
                 if (App.getUser()==0&&flag == 0) {
+                    drawerLayout.closeDrawers();
                     Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                     /*Intent intent = new Intent(this,PickPhotoActivity.class);
                     startActivity(intent);*/
                 }
                 break;
-            case R.id.register:
+            case R.id.exit:
+                getSharedPreferences("User",MODE_PRIVATE).edit().clear().commit();
+                Glide.with(this).load(R.drawable.ph).transform(new GlideCircleTransform(FrameActivity.this)).into(icon_login);
+                tx_login.setText("请登录");
+                flag = 0;
                 break;
             case R.id.forget_password:
                 break;

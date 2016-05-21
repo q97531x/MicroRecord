@@ -81,7 +81,7 @@ public class PasswordActivity extends AppCompatActivity {
                             if (putin == 0) {
                                 passwordImg.setImageResource(R.drawable.cordbg);
                                 pass.append(passwordEdit.getText().toString());
-                                Toast.makeText(PasswordActivity.this, "save" + pass, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(PasswordActivity.this, "save" + pass, Toast.LENGTH_SHORT).show();
                                 password = pass.toString();
                                 pass.setLength(0);
                                 flag = -1;
@@ -90,7 +90,7 @@ public class PasswordActivity extends AppCompatActivity {
                                 putin = 1;
                             } else if (putin == 1) {
                                 pass.append(passwordEdit.getText().toString());
-                                Toast.makeText(PasswordActivity.this, "save" + pass, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(PasswordActivity.this, "save" + pass, Toast.LENGTH_SHORT).show();
                                 if (password.equals(pass.toString())) {
                                     passwordImg.setImageResource(R.drawable.cord6);
                                     //储存到密码表

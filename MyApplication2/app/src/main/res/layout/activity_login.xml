@@ -24,7 +24,7 @@
                 android:layout_marginLeft="12dp"
                 android:textSize="18sp"
                 android:textColor="@color/deepgrey"
-                android:text="账号："/>
+                android:text="邮箱："/>
             <EditText
                 android:id="@+id/login_userName"
                 android:layout_width="match_parent"

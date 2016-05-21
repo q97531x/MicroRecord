@@ -290,6 +290,16 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                     }
                 }
             });
+          lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+              @Override
+              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                  Intent intent = new Intent(getActivity(), WriteActivity.class);
+                  intent.putExtra("id", outcomeList.get(position).getOutcomeId() + "");
+                  intent.putExtra("aim", "update");
+                  intent.putExtra("type", type);
+                  startActivityForResult(intent, UPDATE);
+              }
+          });
         } else if (flag == 1) {
             final List<Income> incomeList = db.findAllByWhere(Income.class, " incomeMonth=\"" + date + "\"");
             final ArrayList<Float> listAmount = new ArrayList<>();
@@ -331,6 +341,16 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                         intent.putExtra("type", type);
                         startActivityForResult(intent, UPDATE);
                     }
+                }
+            });
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(getActivity(), WriteActivity.class);
+                    intent.putExtra("id", incomeList.get(position).getIncomeId() + "");
+                    intent.putExtra("aim", "update");
+                    intent.putExtra("type", type);
+                    startActivityForResult(intent, UPDATE);
                 }
             });
             /*Log.e("income", incomeList.toString()+"ss");
