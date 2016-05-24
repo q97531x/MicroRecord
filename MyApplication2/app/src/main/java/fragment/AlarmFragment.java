@@ -46,10 +46,12 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
     private int weekDay,hour,minute;
     private AlarmAdapter adapter;
     private FinalDb db;
+    private boolean clicked = false;
     private ArrayList<Integer> alarmRate = new ArrayList<>();
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         Typeface iconfont = Typeface.createFromAsset(getActivity().getAssets(), "iconfont.ttf");
         db = FinalDb.create(getActivity());
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
@@ -62,9 +64,24 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
         for(int i=0;i<7;i++){
             alarmRate.add(i);
         }
-        adapter = new AlarmAdapter(getActivity(),db,alarmRate);
+        adapter = new AlarmAdapter(getActivity(),db,alarmRate,this);
         clockList.setAdapter(adapter);
         clockList.setGroupIndicator(null);
+        /*List<AlarmClock> alarmClocks = db.findAll(AlarmClock.class);
+        for (int i = 0;i<alarmClocks.size();i++){
+            clockList.expandGroup(i);
+        }*/
+        clockList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.e("click","click");
+
+//                clockList.expandGroup(groupPosition);
+               /* adapter.getGroupView(groupPosition).
+                clicked = !clicked;*/
+                return false;
+            }
+        });
         /*clockList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -93,6 +110,15 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
 //        Log.e("week",""+t.weekDay+t.monthDay);
         return view;
     }
+    public void reflesh(){
+        Log.e("tag","reflesh");
+        adapter = new AlarmAdapter(getActivity(),db,alarmRate,this);
+        //adapter.notifyDataSetChanged();
+        clockList.setAdapter(adapter);
+    }
+    public void closeItem(int groupPosition){
+        clockList.collapseGroup(groupPosition);
+    }
     public void setTitle(Toolbar toolbar){
         toolbar.setTitle("提醒");
     }
@@ -112,7 +138,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener{
                         Log.e("setClock", hourOfDay + ":" + minute);
                         alarmClock.setAlarmRate(alarmRate);
                         db.save(alarmClock);
-
                     }
                 },hour,minute,true);
                 timePickerDialog.show();

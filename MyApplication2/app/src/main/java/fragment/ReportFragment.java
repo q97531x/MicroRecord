@@ -103,6 +103,19 @@ public class ReportFragment extends Fragment {
         month = c.get(Calendar.MONTH);
         date = year+"-"+(month+1);
         reportDate.setText(date);
+        reportDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        reportDate.setText(year+"-"+(monthOfYear+1));
+                    }
+                },year,(month+1),day);
+                datePickerDialog.show();
+            }
+        });
         //setData(type.size(),list);
         //for(int j = 0;j<M)
         //setData(MpaOutcome.size(),list);
@@ -146,6 +159,7 @@ public class ReportFragment extends Fragment {
                 invalidIncome();
             }
         });
+
         return view;
 }
 
