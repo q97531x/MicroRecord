@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,7 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
     private Calendar c1 = Calendar.getInstance(),c2 = Calendar.getInstance();
     public static final long DAY = 1000L * 60 * 60 * 24;
     private boolean sameDay = true;
+    private Typeface iconfont;
     private long betweenTime;
     public AlarmAdapter(Context context,FinalDb db,ArrayList<Integer> alarmRate) {
         this.context = context;
@@ -51,6 +53,7 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
         time.setToNow();
 //        Log.e("time",time.toString());
         dayOfWeek = time.weekDay;
+        iconfont = Typeface.createFromAsset(context.getAssets(), "iconfont.ttf");
     }
 
     @Override
@@ -178,9 +181,31 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        ViewHolder holder;
         if(convertView == null) {
             convertView = View.inflate(context, R.layout.item_alarm_child, parent);
+            holder = new ViewHolder();
+            holder.icon_rubbish = (TextView)convertView.findViewById(R.id.icon_rubbish);
+            holder.icon_confirm = (TextView)convertView.findViewById(R.id.icon_confirm);
+            holder.tx_zero = (TextView)convertView.findViewById(R.id.tx_zero);
+            holder.tx_one = (TextView)convertView.findViewById(R.id.tx_one);
+            holder.tx_two = (TextView)convertView.findViewById(R.id.tx_two);
+            holder.tx_three = (TextView)convertView.findViewById(R.id.tx_three);
+            holder.tx_four = (TextView)convertView.findViewById(R.id.tx_four);
+            holder.tx_five = (TextView)convertView.findViewById(R.id.tx_five);
+            holder.tx_six = (TextView)convertView.findViewById(R.id.tx_six);
+            convertView.setTag(holder);
+        }else {
+            holder = (ViewHolder)convertView.getTag();
         }
+        holder.icon_rubbish.setTypeface(iconfont);
+        holder.icon_confirm.setTypeface(iconfont);
+        holder.icon_rubbish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return convertView;
     }
@@ -188,5 +213,11 @@ public class AlarmAdapter extends BaseExpandableListAdapter{
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+    public static class ViewHolder{
+        TextView icon_rubbish;
+        TextView icon_confirm;
+        TextView tx_zero,tx_one,tx_two,tx_three,tx_four,tx_five,tx_six;
+
     }
 }
